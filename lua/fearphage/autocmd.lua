@@ -25,7 +25,7 @@ autocmd('TextYankPost', {
 })
 
 autocmd({ "BufWritePre" }, {
-  desc = 'trime trailing whitespace on save',
+  desc = 'trim trailing whitespace on save',
   group = trim_trailing_space,
   pattern = "*",
   command = [[%s/\s\+$//e]],
