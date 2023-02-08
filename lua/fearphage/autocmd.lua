@@ -1,42 +1,14 @@
-local autocmd = vim.api.nvim_create_autocmd
-local augroup = vim.api.nvim_create_augroup
+local api = vim.api
 
 local helpers = require('fearphage.helpers')
 
-local opts = { clear = true }
-
-local auto_create_dirs = augroup('auto-create-dirs', opts)
-local auto_resize_splits = augroup('auto-resize-splits', opts)
-local non_utf8_file = augroup('non-utf8-file', opts)
-local restore_position = augroup('restore-position', opts)
-local trim_trailing_space = augroup('trim-trailing-space', opts)
-local yank_group = augroup('highlight-yank', opts)
-
--- yank highlight
-autocmd('TextYankPost', {
-  group = yank_group,
-  pattern = '*',
-  callback = function()
-    vim.highlight.on_yank({
-      higroup = 'IncSearch',
-      timeout = 40,
-    })
-  end,
-})
-
-autocmd({ "BufWritePre" }, {
-  desc = 'trim trailing whitespace on save',
-  group = trim_trailing_space,
-  pattern = "*",
-  command = [[%s/\s\+$//e]],
-})
-
-
 -- adapted from https://github.com/ethanholz/nvim-lastplace/blob/main/lua/nvim-lastplace/init.lua
+local restore_position = api.nvim_create_augroup('restore-position', {})
+
 local ignore_buftype = { "help", "nofile", "quickfix" }
 local ignore_filetype = { "gitcommit", "gitrebase", "hgcommit", "svn" }
 
-autocmd({ 'BufWinEnter', 'FileType' }, {
+api.nvim_create_autocmd({ 'BufWinEnter', 'FileType' }, {
   desc     = 'conditionally restore cursor position',
   group    = restore_position,
   callback = function()
@@ -77,29 +49,83 @@ autocmd({ 'BufWinEnter', 'FileType' }, {
   end,
 })
 
-autocmd({ "BufRead" }, {
-  desc = 'warn when file is not in utf-8 format',
-  pattern = "*",
-  group = non_utf8_file,
-  callback = function()
-    if vim.bo.fileencoding ~= "utf-8" then
-      vim.notify("File not in UTF-8 format!", vim.log.levels.WARN, { title = "nvim-config" })
+local autocommands = {}
+function autocommands.create_autogroups(definitions)
+  for group_name, defs in pairs(definitions) do
+    local group = api.nvim_create_augroup('local-augroup-' .. group_name, {})
+    for _, def in ipairs(defs) do
+      local opts = {
+        group = group,
+        pattern = def[2],
+      }
+
+      if type(def[3]) == 'string' then
+        opts.command = def[3]
+      else
+        opts.callback = def[3]
+      end
+
+      if def[4] then
+        opts.desc = def[4]
+      end
+
+      api.nvim_create_autocmd(vim.split(def[1], ','), opts)
     end
-  end,
-})
+  end
+end
 
-autocmd({ 'BufWritePre' }, {
-  desc = 'create intermediate directories on save',
-  pattern = '*',
-  group = auto_create_dirs,
-  callback = function(ctx)
-    local dir = vim.fn.fnamemodify(ctx.file, ':p:h')
-    helpers.ensure_dir(dir)
-  end,
-})
+function autocommands.load_commands()
+  local definitions = {
+    buffers = {
+      {
+        'BufRead',
+        "*",
+        function()
+          if vim.bo.fileencoding ~= "utf-8" then
+            vim.notify("File not in UTF-8 format!", vim.log.levels.WARN, { title = "nvim-config" })
+          end
+        end,
+        'warn when file is not in utf-8 format',
+      },
+      {
+        'BufWritePre',
+        '*',
+        function(ctx)
+          local dir = vim.fn.fnamemodify(ctx.file, ':p:h')
+          helpers.ensure_dir(dir)
+        end,
+        'create intermediate directories on save',
+      },
+      {
+        'BufWritePre',
+        '*',
+        [[%s/\s\+$//e]],
+        'trim trailing whitespace on save',
+      },
+    },
+    windows = {
+      {
+        'VimResized',
+        '*',
+        [[tabdo windcmd =]],
+        'auto-resize splits when the terminal is resized',
+      },
+      {
+        'TextYankPost',
+        '*',
+        function()
+          vim.highlight.on_yank({
+            higroup = 'IncSearch',
+            timeout = 40,
+          })
+        end,
+        'highlight on yank',
+      },
+    },
+  }
 
-autocmd({ 'VimResized' }, {
-  desc = 'auto-resize splits when the terminal is resized',
-  group = auto_resize_splits,
-  command = 'wincmd =',
-})
+  autocommands.create_autogroups(definitions)
+end
+
+autocommands.load_commands()
+return autocommands
