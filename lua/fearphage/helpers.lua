@@ -4,7 +4,6 @@ local fn = vim.fn
 
 local M = {}
 
-
 --[[ unused
 function M.deprecate(old, new)
   Util.warn(("`%s` is deprecated. Please use `%s` instead"):format(old, new), { title = "LazyVim" })
@@ -27,6 +26,11 @@ function M.get_nvm_version()
     actual_version.patch
   )
 end
+
+M.root_patterns = {
+  '.git',
+  'lua',
+}
 
 -- source: https://github.com/LazyVim/LazyVim/blob/99ee77a03d54553ce784da0e887fa8c1abeec865/lua/lazyvim/util/init.lua#L33
 -- returns the root directory based on:
@@ -75,6 +79,27 @@ end
 
 function M.has_plugin(plugin)
   return require("lazy.core.config").plugins[plugin] ~= nil
+end
+
+-- this will return a function that calls telescope.
+-- cwd will defautlt to lazyvim.util.get_root
+-- for `files`, git_files or find_files will be chosen depending on .git
+function M.telescope(builtin, opts)
+  local params = { builtin = builtin, opts = opts }
+  return function()
+    builtin = params.builtin
+    opts = params.opts
+    opts = vim.tbl_deep_extend('force', { cwd = M.get_root() }, opts or {})
+    if builtin == 'files' then
+      if vim.loop.fs_stat((opts.cwd or vim.loop.cwd()) .. '/.git') then
+        opts.show_untracked = true
+        builtin = 'git_files'
+      else
+        builtin = 'find_files'
+      end
+    end
+    require('telescope.builtin')[builtin](opts)
+  end
 end
 
 return M
