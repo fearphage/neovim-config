@@ -77,6 +77,25 @@ end
 function autocommands.load_commands()
   local definitions = {
     buffers = {
+      -- { 'BufEnter', '*', [[setlocal  cursorline]] },
+      --
+      {
+        'BufRead,BufNewFile',
+        'Jenkinsfile',
+        [[setlocal shiftwidth=4 softtabstop=4 tabstop=4 ft=groovy]],
+      },
+      {
+        'BufEnter,CmdlineLeave,FocusGained,InsertLeave,WinEnter',
+        '*',
+        [[if &number | setlocal relativenumber | endif]],
+        'conditionally toggle relative line numbers (for pairing)',
+      },
+      {
+        'BufLeave,CmdlineLeave,FocusLost,InsertLeave,WinEnter',
+        '*',
+        [[if &number | setlocal norelativenumber | endif]],
+        'conditionally toggle relative line numbers (for pairing)',
+      },
       {
         'BufRead',
         "*",
@@ -87,6 +106,7 @@ function autocommands.load_commands()
         end,
         'warn when file is not in utf-8 format',
       },
+      { 'BufWritePost', '*.mod, *.sum', ':silent :GoModTidy' },
       {
         'BufWritePre',
         '*',
@@ -104,12 +124,7 @@ function autocommands.load_commands()
       },
     },
     windows = {
-      {
-        'VimResized',
-        '*',
-        [[tabdo windcmd =]],
-        'auto-resize splits when the terminal is resized',
-      },
+      { 'FileType', 'gitcommit,md,rst', [[setlocal spell]] },
       {
         'TextYankPost',
         '*',
@@ -120,6 +135,12 @@ function autocommands.load_commands()
           })
         end,
         'highlight on yank',
+      },
+      {
+        'VimResized',
+        '*',
+        [[tabdo windcmd =]],
+        'auto-resize splits when the terminal is resized',
       },
     },
   }
