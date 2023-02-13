@@ -91,7 +91,7 @@ function autocommands.load_commands()
         'conditionally toggle relative line numbers (for pairing)',
       },
       {
-        'BufLeave,CmdlineLeave,FocusLost,InsertLeave,WinEnter',
+        'BufLeave,CmdlineEnter,FocusLost,InsertEnter,WinLeave',
         '*',
         [[if &number | setlocal norelativenumber | endif]],
         'conditionally toggle relative line numbers (for pairing)',

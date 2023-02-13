@@ -4,7 +4,8 @@ vim.opt.hlsearch = true
 vim.opt.incsearch = true
 
 vim.opt.number = true
-vim.opt.relativenumber = true
+-- this is toggled automatically for active windows in autocmds
+-- vim.opt.relativenumber = true
 
 vim.opt.expandtab = true
 vim.opt.shiftround = true
