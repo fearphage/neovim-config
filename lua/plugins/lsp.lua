@@ -25,11 +25,15 @@ return {
     lsp.preset("recommended")
 
     lsp.ensure_installed({
+      'bashls',
+      'dockerls',
       'eslint',
+      'jsonls',
       'lua_ls',
       'rust_analyzer',
       'tsserver',
       --'vim-language-server',
+      'yamlls',
     })
 
     -- Fix Undefined global 'vim'
@@ -41,6 +45,19 @@ return {
           }
         }
       }
+    })
+
+    -- disable key ordering
+    lsp.configure('yamlls', {
+      settings = {
+        yaml = {
+          format = {
+            printWidth = 100,
+          },
+          keyOrdering = false,
+          mapKeyOrder = false,
+        },
+      },
     })
 
 
