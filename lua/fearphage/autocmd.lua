@@ -139,7 +139,7 @@ function autocommands.load_commands()
       {
         'VimResized',
         '*',
-        [[tabdo windcmd =]],
+        [[tabdo wincmd =]],
         'auto-resize splits when the terminal is resized',
       },
     },
