@@ -124,7 +124,14 @@ function autocommands.load_commands()
       },
     },
     windows = {
-      { 'FileType', 'gitcommit,md,rst', [[setlocal spell]] },
+      {
+        'FileType',
+        'gitcommit,markdown,rst',
+        function()
+          vim.cmd [[setlocal spell]]
+          vim.cmd [[setlocal complete+=kspell]]
+        end,
+      },
       {
         'TextYankPost',
         '*',
