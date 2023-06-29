@@ -51,8 +51,9 @@ return {
       'eslint',
       'jsonls',
       'lua_ls',
-      'marksman', -- markdown
+      'remark_ls', -- markdown
       'rust_analyzer',
+      'tailwindcss',
       'tsserver',
       --'vim-language-server',
       'yamlls',
