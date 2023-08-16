@@ -79,9 +79,9 @@ return {
 
   -- fuzzy finder
   {
-    "nvim-telescope/telescope.nvim",
-    cmd = "Telescope",
-    version = false, -- telescope did only one release, so use HEAD for now
+    'nvim-telescope/telescope.nvim',
+    event = { 'VeryLazy' },
+    -- version = false, -- telescope did only one release, so use HEAD for now
     keys = {
       { "<leader>,", "<cmd>Telescope buffers show_all_buffers=true<cr>", desc = "Switch Buffer" },
       { "<leader>/", helpers.telescope("live_grep"), desc = "Find in Files (Grep)" },
@@ -112,9 +112,7 @@ return {
       { "<leader>sw", helpers.telescope("grep_string"), desc = "Word (root dir)" },
       { "<leader>sW", helpers.telescope("grep_string", { cwd = false }), desc = "Word (cwd)" },
       { "<leader>uC", helpers.telescope("colorscheme", { enable_preview = true }), desc = "Colorscheme with preview" },
-      {
-        "<leader>ss",
-        helpers.telescope("lsp_document_symbols", {
+      { "<leader>ss", helpers.telescope("lsp_document_symbols", {
           symbols = {
             "Class",
             "Function",
@@ -131,10 +129,25 @@ return {
         desc = "Goto Symbol",
       },
     },
+    dependencies = {
+      {
+        'stevearc/aerial.nvim',
+        { -- https://github.com/nvim-telescope/telescope-frecency.nvim
+          'nvim-telescope/telescope-frecency.nvim',
+          dependencies = {
+            { 'tami5/sqlite.lua' }, -- https://github.com/tami5/sqlite.lua
+          },
+        },
+        { -- https://github.com/nvim-telescope/telescope-fzf-native.nvim
+          'nvim-telescope/telescope-fzf-native.nvim',
+          build = 'make',
+        },
+      },
+    },
     opts = {
       defaults = {
-        prompt_prefix = " ",
-        selection_caret = " ",
+        dynamic_preview_title = true,
+        laout_strategy = 'flex',
         mappings = {
           i = {
             ["<c-t>"] = function(...)
@@ -153,9 +166,56 @@ return {
               return require("telescope.actions").cycle_history_prev(...)
             end,
           },
+          n = {
+            ["<c-t>"] = function(...)
+              return require("trouble.providers.telescope").open_with_trouble(...)
+            end,
+          },
+        },
+        path_display = { 'smart', truncate = 3 },
+        prompt_prefix = ' ',
+        scroll_stratgey = 'cycle',
+        selection_caret = ' ',
+      },
+      extensions = {
+        frecency = { workspaces = {} },
+        fzf = {
+          fuzzy = true,
+          override_generic_sorter = true,
+          override_file_sorter = true,
+          case_mode = 'smart_case',
         },
       },
+      pickers = {
+         buffers = {
+          show_all_buffers = true,
+          previewer = false,
+          sort_lastused = true,
+          theme = 'ivy',
+        },
+        find_files = { theme = 'ivy' },
+        file_browser = { theme = 'ivy' },
+        grep_string = { theme = 'ivy' },
+        live_grep = { theme = 'dropdown' },
+        lsp_code_actions = { theme = 'dropdown' },
+        lsp_definitions = { theme = 'dropdown' },
+        lsp_implementations = { theme = 'dropdown' },
+        lsp_references = { theme = 'dropdown' },
+      },
     },
+    config = function(_, opts)
+      require('aerial').setup()
+
+      local telescope = require('telescope')
+
+      -- Extensions
+      telescope.load_extension('aerial')
+      telescope.load_extension('frecency')
+      telescope.load_extension('fzf')
+      telescope.load_extension('notify')
+
+      telescope.setup(opts)
+    end,
   },
 
   -- easily jump to any location and enhanced f/t motions for Leap
@@ -300,5 +360,10 @@ return {
       { "<leader>xT", "<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme (Trouble)" },
       { "<leader>st", "<cmd>TodoTelescope<cr>", desc = "Todo" },
     },
+  },
+
+  {
+    'yasuhiroki/github-actions-yaml.vim',
+    ft = 'yaml',
   },
 }
