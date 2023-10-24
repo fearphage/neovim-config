@@ -116,6 +116,8 @@ return {
       ['<C-b>'] = cmp_action.luasnip_jump_backward(),
       ['<C-e>'] = cmp.mapping.abort(), -- close completion window
       ['<C-Space>'] = cmp.mapping.complete(), -- show completion suggestions
+      ['<C-u>'] = cmp.mapping.scroll_docs(-4), -- scroll up the documentation window
+      ['<C-d>'] = cmp.mapping.scroll_docs(4), -- scroll down the documentation window
     })
 
     -- disable completion with tab
