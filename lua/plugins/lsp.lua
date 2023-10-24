@@ -1,6 +1,6 @@
 return {
   'VonHeikemen/lsp-zero.nvim',
-  event = "BufReadPre",
+  event = 'BufReadPre',
   dependencies = {
     -- LSP Support
     { 'neovim/nvim-lspconfig' },
@@ -27,11 +27,12 @@ return {
         },
       },
     },
-    { 'hrsh7th/cmp-buffer' },
-    { 'hrsh7th/cmp-path' },
-    { 'saadparwaiz1/cmp_luasnip' },
+    { 'hrsh7th/cmp-buffer' }, -- source for text in buffer
+    { 'hrsh7th/cmp-path' }, -- source for file system paths
+    { 'saadparwaiz1/cmp_luasnip' }, -- for autocompletion
     { 'hrsh7th/cmp-nvim-lsp' },
     { 'hrsh7th/cmp-nvim-lua' },
+    { 'onsails/lspkind.nvim' }, -- vs-code like pictograms
 
     -- Snippets
     {
@@ -41,9 +42,9 @@ return {
     { 'rafamadriz/friendly-snippets' },
   },
   config = function()
-    local lsp = require("lsp-zero")
+    local lsp = require('lsp-zero')
 
-    lsp.preset("recommended")
+    lsp.preset('recommended')
 
     lsp.ensure_installed({
       'bashls',
@@ -85,12 +86,36 @@ return {
 
 
     local cmp = require('cmp')
+    local cmp_action = require('lsp-zero').cmp_action()
+    local luasnip = require('luasnip')
+    require('luasnip.loaders.from_vscode').lazy_load()
+    local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+    local handlers = require('nvim-autopairs.completion.handlers')
+    cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({
+      filetypes = {
+        ['*'] = {
+          ['('] = {
+            kind = {
+              cmp.lsp.CompletionItemKind.Function,
+              cmp.lsp.CompletionItemKind.Method,
+            },
+            handler = handlers['*'],
+          },
+        },
+      },
+    }))
+
     local cmp_select = { behavior = cmp.SelectBehavior.Select }
     local cmp_mappings = lsp.defaults.cmp_mappings({
+      ['<C-k>'] = cmp.mapping.select_prev_item(cmp_select), -- custom adds by Phred
+      ['<C-j>'] = cmp.mapping.select_next_item(cmp_select), -- custom adds by Phred
       ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
       ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
       ['<C-y>'] = cmp.mapping.confirm({ select = true }),
-      ["<C-Space>"] = cmp.mapping.complete(),
+      ['<C-f>'] = cmp_action.luasnip_jump_forward(),
+      ['<C-b>'] = cmp_action.luasnip_jump_backward(),
+      ['<C-e>'] = cmp.mapping.abort(), -- close completion window
+      ['<C-Space>'] = cmp.mapping.complete(), -- show completion suggestions
     })
 
     -- disable completion with tab
@@ -99,7 +124,57 @@ return {
     -- cmp_mappings['<S-Tab>'] = nil
 
     lsp.setup_nvim_cmp({
-      mapping = cmp_mappings
+      mapping = cmp_mappings,
+      enabled = function()
+        -- disables in comments
+        local context = require('cmp.config.context')
+        if vim.api.nvim_get_mode().mode == 'c' then
+          return true
+        else
+          return not context.in_treesitter_capture('comment') and not context.in_syntax_group('Comment')
+        end
+      end,
+      preselect = 'none',
+      completion = {
+        completeopt = 'menu,menuone,noinsert,noselect',
+      },
+      snippet = {
+        expand = function(args)
+          luasnip.lsp_expand(args.body)
+        end,
+      },
+      window = {
+        completion = cmp.config.window.bordered(),
+        documentation = cmp.config.window.bordered(),
+      },
+      formatting = {
+        fields = { 'abbr', 'kind', 'menu' },
+        format = require('lspkind').cmp_format({
+          maxwidth = 50,
+          ellipsis_char = '...',
+          mode = 'symbol',
+          symbol_map = { Copilot = '' },
+        }),
+      },
+      sorting = {
+        priority_weight = 2,
+        comparators = {
+          cmp.config.compare.exact,
+          -- no copilot yet
+          -- (function()
+          --   local success, module = pcall(require, 'copilot_cmp.comparators')
+          --   return success and module.prioritize or nil
+          -- end)(),
+          cmp.config.compare.offset,
+          cmp.config.compare.score,
+          cmp.config.compare.recently_used,
+          cmp.config.compare.locality,
+          cmp.config.compare.kind,
+          cmp.config.compare.sort_text,
+          cmp.config.compare.length,
+          cmp.config.compare.order,
+        },
+      },
     })
 
     lsp.set_preferences({
@@ -115,27 +190,27 @@ return {
     lsp.on_attach(function(_, bufnr)
       local opts = { buffer = bufnr, remap = false }
 
-      -- if client.name == "eslint" then
+      -- if client.name == 'eslint' then
       --   vim.cmd.LspStop('eslint')
       --   return
       -- end
 
-      -- vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
-      vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-      vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-      vim.keymap.set("n", "<leader>vws", vim.lsp.buf.workspace_symbol, opts)
-      vim.keymap.set("n", "<leader>vd", vim.diagnostic.open_float, opts)
-      vim.keymap.set("n", "[d", vim.diagnostic.goto_next, opts)
-      vim.keymap.set("n", "]d", vim.diagnostic.goto_prev, opts)
-      vim.keymap.set("n", "<leader>vca", vim.lsp.buf.code_action, opts)
-      vim.keymap.set("n", "<leader>vrr", vim.lsp.buf.references, opts)
-      vim.keymap.set("n", "<leader>vrn", vim.lsp.buf.rename, opts)
-      vim.keymap.set("n", "<F2>", vim.lsp.buf.rename, opts)
+      -- vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+      vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+      vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+      vim.keymap.set('n', '<leader>vws', vim.lsp.buf.workspace_symbol, opts)
+      vim.keymap.set('n', '<leader>vd', vim.diagnostic.open_float, opts)
+      vim.keymap.set('n', '[d', vim.diagnostic.goto_next, opts)
+      vim.keymap.set('n', ']d', vim.diagnostic.goto_prev, opts)
+      vim.keymap.set('n', '<leader>vca', vim.lsp.buf.code_action, opts)
+      vim.keymap.set('n', '<leader>vrr', vim.lsp.buf.references, opts)
+      vim.keymap.set('n', '<leader>vrn', vim.lsp.buf.rename, opts)
+      vim.keymap.set('n', '<F2>', vim.lsp.buf.rename, opts)
       -- deprecated
-      -- vim.keymap.set("n", "<leader>e", vim.lsp.diagnostic.show_line_diagnostics, opts)
-      vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, opts)
-      vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, opts)
-      vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, opts)
+      -- vim.keymap.set('n', '<leader>e', vim.lsp.diagnostic.show_line_diagnostics, opts)
+      vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, opts)
+      vim.keymap.set('i', '<C-h>', vim.lsp.buf.signature_help, opts)
+      vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
     end)
 
     lsp.setup()

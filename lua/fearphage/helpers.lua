@@ -6,9 +6,41 @@ local M = {}
 
 --[[ unused
 function M.deprecate(old, new)
-  Util.warn(("`%s` is deprecated. Please use `%s` instead"):format(old, new), { title = "LazyVim" })
+  Util.warn(('`%s` is deprecated. Please use `%s` instead'):format(old, new), { title = 'LazyVim' })
 end
 ]]
+
+-- creates floating terminal for toggleterm
+function M.create_floating_terminal(term, cmd)
+	local instance = nil
+
+	if fn.executable(cmd) == 1 then
+		local terminal = term.Terminal
+		instance = terminal:new({
+			cmd = cmd,
+			dir = 'git_dir',
+			direction = 'float',
+			float_opts = {
+				border = 'double',
+			},
+			on_open = function()
+				vim.cmd('startinsert!')
+			end,
+			on_close = function()
+				vim.cmd('startinsert!')
+			end,
+		})
+	end
+
+	-- check if TermExec function exists
+	return function()
+		if fn.executable(cmd) == 1 then
+			instance:toggle()
+		else
+			vim.notify('Command not found: ' .. cmd .. '. Ensure it is installed.', 'error')
+		end
+	end
+end
 
 function M.ensure_dir(dir)
   if fn.isdirectory(dir) == 0 then
@@ -20,7 +52,7 @@ function M.get_nvm_version()
   local actual_version = vim.version()
 
   return string.format(
-    "%d.%d.%d",
+    '%d.%d.%d',
     actual_version.major,
     actual_version.minor,
     actual_version.patch
@@ -42,7 +74,7 @@ M.root_patterns = {
 function M.get_root()
   ---@type string?
   local path = vim.api.nvim_buf_get_name(0)
-  path = path ~= "" and vim.loop.fs_realpath(path) or nil
+  path = path ~= '' and vim.loop.fs_realpath(path) or nil
   ---@type string[]
   local roots = {}
   if path then
@@ -78,7 +110,23 @@ function M.has(feature)
 end
 
 function M.has_plugin(plugin)
-  return require("lazy.core.config").plugins[plugin] ~= nil
+  return require('lazy.core.config').plugins[plugin] ~= nil
+end
+
+-- helper for cmp completion
+function M.has_words_before()
+  local line, col = table.unpack(vim.api.nvim_win_get_cursor(0))
+	return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match('%s') == nil
+end
+
+function M.keymap(mode, lhs, rhs, opts)
+  local options = { noremap = true, silent = true }
+
+  if opts then
+    options = vim.tbl_extend('force', options, opts)
+  end
+
+  vim.keymap.set(mode, lhs, rhs, options)
 end
 
 -- this will return a function that calls telescope.
