@@ -4,13 +4,18 @@ return {
   opts = {
     indent = {
       char = '',
-      -- highlight = {
-      --   'IndentBlanklineIndent1',
-      --   'IndentBlanklineIndent2',
-      -- },
     },
-    -- show_current_context = true,
-    -- show_current_context_start = true,
+    scope = {
+      show_exact_scope = true,
+    },
+    whitespace = {
+      highlight = {
+        'Function',
+        'Label',
+        'Whitespace',
+        'NonText',
+      },
+    },
     -- space_char_highlight_list = {
     --   'IndentBlanklineIndent1',
     --   'IndentBlanklineIndent2',
