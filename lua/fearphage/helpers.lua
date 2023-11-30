@@ -12,34 +12,39 @@ end
 
 -- creates floating terminal for toggleterm
 function M.create_floating_terminal(term, cmd)
-	local instance = nil
+  local instance = nil
 
-	if fn.executable(cmd) == 1 then
-		local terminal = term.Terminal
-		instance = terminal:new({
-			cmd = cmd,
-			dir = 'git_dir',
-			direction = 'float',
-			float_opts = {
-				border = 'double',
-			},
-			on_open = function()
-				vim.cmd('startinsert!')
-			end,
-			on_close = function()
-				vim.cmd('startinsert!')
-			end,
-		})
-	end
+  if fn.executable(cmd) == 1 then
+    local terminal = term.Terminal
+    instance = terminal:new({
+      cmd = cmd,
+      dir = 'git_dir',
+      direction = 'float',
+      float_opts = {
+        border = 'double',
+      },
+      on_open = function()
+        vim.cmd('startinsert!')
+      end,
+      on_close = function()
+        vim.cmd('startinsert!')
+      end,
+    })
+  end
 
-	-- check if TermExec function exists
-	return function()
-		if fn.executable(cmd) == 1 then
-			instance:toggle()
-		else
-			vim.notify('Command not found: ' .. cmd .. '. Ensure it is installed.', 'error')
-		end
-	end
+  -- check if TermExec function exists
+  return function()
+    if fn.executable(cmd) == 1 then
+      instance:toggle()
+    else
+      vim.notify('Command not found: ' .. cmd .. '. Ensure it is installed.', 'error')
+    end
+  end
+end
+
+-- check if option to disable is active from specified group
+function M.enabled(group, opt)
+  return group == nil or group[opt] == nil or group[opt] == true
 end
 
 function M.ensure_dir(dir)
@@ -116,7 +121,7 @@ end
 -- helper for cmp completion
 function M.has_words_before()
   local line, col = table.unpack(vim.api.nvim_win_get_cursor(0))
-	return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match('%s') == nil
+  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match('%s') == nil
 end
 
 function M.keymap(mode, lhs, rhs, opts)

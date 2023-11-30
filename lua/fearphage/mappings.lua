@@ -1,4 +1,8 @@
-vim.g.mapleader = ' '
+local enabled = require("fearphage.helpers").enabled
+local group = require("fearphage.user-config").enable_plugins
+local keymap = require("fearphage.helpers").keymap
+
+vim.g.mapleader = " "
 
 --[[
 -- ordering issue
@@ -11,9 +15,9 @@ vim.g.mapleader = ' '
 local helpers = require('fearphage.helpers')
 ]]
 
-vim.keymap.set('n', ';', ':')
-vim.keymap.set('n', ';;', ';')
-vim.keymap.set('n', '<leader>/', vim.cmd.nohlsearch, { silent = true })
+keymap("n", ";", ":")
+keymap("n", ";;", ";")
+keymap("n", "<leader>/", vim.cmd.nohlsearch, { silent = true })
 -- vim.keymap.set('n', '<leader>e', function() vim.lsp.diagnostic.show_line_diagnostics() end, { remap = false, silent = true })
 -- vim.keymap.set('n', '<C-h>', '<C-w>h')
 -- vim.keymap.set('n', '<C-j>', '<C-w>j')
@@ -21,13 +25,13 @@ vim.keymap.set('n', '<leader>/', vim.cmd.nohlsearch, { silent = true })
 -- vim.keymap.set('n', '<C-l>', '<C-w>l')
 
 -- number manipulation
-vim.keymap.set('n', '+', '<C-a>', { noremap = true })
-vim.keymap.set('n', '-', '<C-x>', { noremap = true })
+keymap("n", "+", "<C-a>", { noremap = true })
+keymap("n", "-", "<C-x>", { noremap = true })
 
 -- Quickfix
-vim.keymap.set('', '<C-n>', ':cnext<CR>zz', {})
-vim.keymap.set('', '<C-m>', ':cprevious<CR>zz', {})
-vim.keymap.set('n', '<leader>a', ':cclose<CR>', { noremap = true })
+keymap("", "<C-n>", ":cnext<CR>zz", {})
+keymap("", "<C-m>", ":cprevious<CR>zz", {})
+keymap("n", "<leader>a", ":cclose<CR>", { noremap = true })
 
 -- highlights under cursor
 --[[
@@ -38,10 +42,10 @@ end
 
 -- buffers
 -- if helpers.has_plugin('nvim-bufferline.lua') then
-  vim.keymap.set('n', '<S-h>', '<cmd>BufferLineCyclePrev<cr>', { desc = 'Prev buffer' })
-  vim.keymap.set('n', '<S-l>', '<cmd>BufferLineCycleNext<cr>', { desc = 'Next buffer' })
-  vim.keymap.set('n', '[b', '<cmd>BufferLineCyclePrev<cr>', { desc = 'Prev buffer' })
-  vim.keymap.set('n', ']b', '<cmd>BufferLineCycleNext<cr>', { desc = 'Next buffer' })
+keymap("n", "<S-h>", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev buffer" })
+keymap("n", "<S-l>", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
+keymap("n", "[b", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev buffer" })
+keymap("n", "]b", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
 --[[
 else
   vim.keymap.set('n', '<S-h>', '<cmd>bprevious<cr>', { desc = 'Prev buffer' })
@@ -52,64 +56,100 @@ end
 ]]
 
 -- Resize window using <ctrl> arrow keys
-vim.keymap.set('n', '<C-Up>', '<cmd>resize +2<cr>', { desc = 'Increase window height' })
-vim.keymap.set('n', '<C-Down>', '<cmd>resize -2<cr>', { desc = 'Decrease window height' })
-vim.keymap.set('n', '<C-Left>', '<cmd>vertical resize -2<cr>', { desc = 'Decrease window width' })
-vim.keymap.set('n', '<C-Right>', '<cmd>vertical resize +2<cr>', { desc = 'Increase window width' })
+keymap("n", "<C-Up>", "<cmd>resize +2<cr>", { desc = "Increase window height" })
+keymap("n", "<C-Down>", "<cmd>resize -2<cr>", { desc = "Decrease window height" })
+keymap("n", "<C-Left>", "<cmd>vertical resize -2<cr>", { desc = "Decrease window width" })
+keymap("n", "<C-Right>", "<cmd>vertical resize +2<cr>", { desc = "Increase window width" })
 
 -- LSP
 -- local opts = { noremap = true, silent = true }
--- vim.keymap.set('n', 'gi', ':lua vim.lsp.buf.implementation()<CR>', opts)
--- vim.keymap.set('n', 'tt', ':lua vim.lsp.buf.type_definition()<CR>', opts)
--- vim.keymap.set('n', 'gr', ':lua vim.lsp.buf.references()<CR>', opts)
--- vim.keymap.set('n', 'g0', ':lua vim.lsp.buf.document_symbol()<CR>', opts)
--- vim.keymap.set('n', 'gW', ':lua vim.lsp.buf.workspace_symbol()<CR>', opts)
--- vim.keymap.set('n', '<leader>ca', ':lua vim.lsp.buf.code_action()<CR>', opts)
--- vim.keymap.set('n', '<leader>cl', ':lua vim.lsp.codelens.run()<CR>', opts)
+-- keymap('n', 'gi', ':lua vim.lsp.buf.implementation()<CR>', opts)
+-- keymap('n', 'tt', ':lua vim.lsp.buf.type_definition()<CR>', opts)
+-- keymap('n', 'gr', ':lua vim.lsp.buf.references()<CR>', opts)
+-- keymap('n', 'g0', ':lua vim.lsp.buf.document_symbol()<CR>', opts)
+-- keymap('n', 'gW', ':lua vim.lsp.buf.workspace_symbol()<CR>', opts)
+-- keymap('n', '<leader>ca', ':lua vim.lsp.buf.code_action()<CR>', opts)
+-- keymap('n', '<leader>cl', ':lua vim.lsp.codelens.run()<CR>', opts)
 
 --[[
 --
 -- From ThePrimeagen below
 --
 --]]
-vim.keymap.set('n', '<leader>pv', vim.cmd.Ex)
+keymap("n", "<leader>pv", vim.cmd.Ex)
 
-vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv")
-vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv")
+keymap("v", "J", ":m '>+1<CR>gv=gv")
+keymap("v", "K", ":m '<-2<CR>gv=gv")
 
-vim.keymap.set('n', 'J', "mzJ`z")
-vim.keymap.set('n', '<C-d>', "<C-d>zz")
-vim.keymap.set('n', '<C-u>', "<C-u>zz")
-vim.keymap.set('n', 'n', 'nzzzv')
-vim.keymap.set('n', 'N', 'Nzzzv')
+keymap("n", "J", "mzJ`z")
+keymap("n", "<C-d>", "<C-d>zz")
+keymap("n", "<C-u>", "<C-u>zz")
+keymap("n", "n", "nzzzv")
+keymap("n", "N", "Nzzzv")
 
-vim.keymap.set('n', '<leader>vwm', function()
-    require('vim-with-me').StartVimWithMe()
+keymap("n", "<leader>vwm", function()
+	require("vim-with-me").StartVimWithMe()
 end)
-vim.keymap.set('n', '<leader>svwm', function()
-    require('vim-with-me').StopVimWithMe()
+keymap("n", "<leader>svwm", function()
+	require("vim-with-me").StopVimWithMe()
 end)
 
 -- greatest remap ever
-vim.keymap.set('x', '<leader>p', [['_dP]])
+keymap("x", "<leader>p", [['_dP]])
 
 -- next greatest remap ever : asbjornHaland
-vim.keymap.set({'n', 'v'}, '<leader>y', [['+y]])
-vim.keymap.set('n', '<leader>Y', [['+Y]])
+keymap({ "n", "v" }, "<leader>y", [['+y]])
+keymap("n", "<leader>Y", [['+Y]])
 
-vim.keymap.set({'n', 'v'}, '<leader>d', [['_d]])
+keymap({ "n", "v" }, "<leader>d", [['_d]])
 
 -- This is going to get me cancelled
-vim.keymap.set('i', '<C-c>', '<Esc>')
+keymap("i", "<C-c>", "<Esc>")
 
-vim.keymap.set('n', 'Q', '<nop>')
-vim.keymap.set('n', '<C-f>', '<cmd>silent !tmux neww tmux-sessionizer<CR>')
-vim.keymap.set('n', '<leader>f', vim.lsp.buf.format)
+keymap("n", "Q", "<nop>")
+keymap("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
+keymap("n", "<leader>f", vim.lsp.buf.format)
 
--- vim.keymap.set('n', '<C-k>', '<cmd>cnext<CR>zz')
--- vim.keymap.set('n', '<C-j>', '<cmd>cprev<CR>zz')
-vim.keymap.set('n', '<leader>k', '<cmd>lnext<CR>zz')
-vim.keymap.set('n', '<leader>j', '<cmd>lprev<CR>zz')
+-- keymap('n', '<C-k>', '<cmd>cnext<CR>zz')
+-- keymap('n', '<C-j>', '<cmd>cprev<CR>zz')
+keymap("n", "<leader>k", "<cmd>lnext<CR>zz")
+keymap("n", "<leader>j", "<cmd>lprev<CR>zz")
 
-vim.keymap.set('n', '<leader>s', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
-vim.keymap.set('n', '<leader>x', '<cmd>!chmod +x %<CR>', { silent = true })
+keymap("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
+keymap("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
+
+if enabled(group, "dap") then
+	-- _G.dap = require('dap')
+	-- keymap('n', '<leader>dc', '<CMD>lua dap.continue()<CR>')
+	keymap("n", "<leader>dc", "<CMD>DapContinue<CR>")
+	-- keymap('n', '<leader>n', '<CMD>lua dap.step_over()<CR>')
+	keymap("n", "<leader>n", "<CMD>DapStepOver<CR>")
+	-- keymap('n', '<leader>si', '<CMD>lua dap.step_into()<CR>')
+	keymap("n", "<leader>si", "<CMD>DapStepInto<CR>")
+	-- keymap('n', '<leader>so', '<CMD>lua dap.step_out()<CR>')
+	keymap("n", "<leader>so", "<CMD>DapStepOut<CR>")
+	-- keymap('n', '<leader>b', '<CMD>lua dap.toggle_breakpoint()<CR>')
+	-- keymap('n', '<leader>db', '<CMD>lua dap.toggle_breakpoint()<CR>', {
+	keymap("n", "<leader>db", "<CMD>DapToggleBreakpoint<CR>", {
+		desc = "Toggle breakpoint at line",
+	})
+	keymap("n", "<leader>dq", "<CMD>lua dap.disconnect({ terminateDebuggee = true })<CR>")
+	keymap(
+		"n",
+		"<leader>dus",
+		'<CMD>lua require("dapui").toggle()<CR>',
+		-- keymap('n', '<leader>dus', function()
+		--   local widgets = require('dap.ui.widgets')
+		--   local sidebar = widgets.sidebar(widgets.scopes)
+		--   sidebar.open()
+		-- end,
+		{ desc = "Open debugging sidebar" }
+	)
+	keymap("n", "<leader>dgt", '<CMD>lua require("dap-go").debug_test()<CR>')
+end
+
+keymap("i", "<C-s>", "<ESC>:w<CR>")
+keymap("n", "<C-s>", ":w<CR>")
+keymap("v", "<silent><C-s>", ":sort<CR>", { silent = true })
+keymap("n", "]d", "<CMD>lua vim.lsp.diagnostic.goto_next({ popup_opts = { border = lvim.lsp.popup_border } })<CR>")
+keymap("n", "[d", "<CMD>lua vim.lsp.diagnostic.goto_prev({ popup_opts = { border = lvim.lsp.popup_border } })<CR>")

@@ -50,9 +50,10 @@ return {
       'bashls',
       'dockerls',
       'eslint',
+      'gopls',
       'jsonls',
       'lua_ls',
-      'remark_ls', -- markdown
+      -- 'remark_ls', -- markdown
       'rust_analyzer',
       'tailwindcss',
       'tsserver',
@@ -60,6 +61,28 @@ return {
       'yamlls',
     })
 
+    lsp.configure('gopls', {
+      cmd = { 'gopls', '-remote.debug=:0' },
+      filetypes = { 'go', 'gomod', 'gohtmltmpl', 'gosum', 'gotexttmpl', 'gotmpl', 'gowork' },
+      settings = {
+        gopls = {
+          analyses = {
+            ST1003 = true,
+            fieldalignment = true,
+            nilness = true,
+            nonewvars = true,
+            shadow = true,
+            undeclaredname = true,
+            unreachable = true,
+            unusedparams = true,
+            unusedwrite = true,
+            useany = true,
+          },
+          completeUnimported = true,
+          usePlaceholders = true,
+        }
+      }
+    })
     -- Fix Undefined global 'vim'
     lsp.configure('lua_ls', {
       settings = {

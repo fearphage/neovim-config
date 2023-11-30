@@ -11,8 +11,12 @@ return {
     { '<leader><space>', helpers.telescope('files'), desc = 'Find Files (root dir)' },
     -- find
     { '<leader>fb', '<cmd>Telescope buffers<cr>', desc = 'Buffers' },
+    { '<leader>fc', '<cmd>Telescope git_commits<CR>', desc = 'commits' },
     { '<leader>ff', helpers.telescope('files'), desc = 'Find Files (root dir)' },
     { '<leader>fF', helpers.telescope('files', { cwd = false }), desc = 'Find Files (cwd)' },
+    { '<leader>fk', '<cmd>Telescope keymaps<cr>', desc = 'Key Maps' },
+    { '<leader>fm', '<cmd>Telescope marks<cr>', desc = 'Marks' },
+    { '<leader>fq', '<cmd>Telescope quickfix<cr>', desc = 'Quickfix' },
     { '<leader>fr', '<cmd>Telescope oldfiles<cr>', desc = 'Recent' },
     -- git
     { '<leader>gc', '<cmd>Telescope git_commits<CR>', desc = 'commits' },
