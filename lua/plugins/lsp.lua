@@ -17,8 +17,8 @@ return {
       opts = {
         snippet = {
           expand = function(args)
-            require'luasnip'.lsp_expand(args.body)
-          end
+            require('luasnip').lsp_expand(args.body)
+          end,
         },
 
         sources = {
@@ -37,9 +37,35 @@ return {
     -- Snippets
     {
       'L3MON4D3/LuaSnip',
-      build = 'make install_jsregexp'
+      build = 'make install_jsregexp',
     },
     { 'rafamadriz/friendly-snippets' },
+
+    -- Formatting
+    {
+      'stevearc/conform.nvim',
+      keys = {
+        {
+          -- Customize or remove this keymap to your liking
+          '<leader>af',
+          function()
+            require('conform').format({ async = true, lsp_fallback = true })
+          end,
+          mode = '',
+          desc = 'Format buffer',
+        },
+      },
+      opts = {
+        formatters = {
+          shfmt = {
+            prepend_args = { '--indent', '2', '--space-redirects' },
+          },
+          stylua = {
+            prepend_args = { '--indent-type', 'Spaces', '--indent-width', '2', '--quote-style', 'AutoPreferSingle' },
+          },
+        },
+      },
+    },
   },
   config = function()
     local lsp = require('lsp-zero')
@@ -80,18 +106,18 @@ return {
           },
           completeUnimported = true,
           usePlaceholders = true,
-        }
-      }
+        },
+      },
     })
     -- Fix Undefined global 'vim'
     lsp.configure('lua_ls', {
       settings = {
         Lua = {
           diagnostics = {
-            globals = { 'vim' }
-          }
-        }
-      }
+            globals = { 'vim' },
+          },
+        },
+      },
     })
 
     -- disable key ordering
@@ -107,26 +133,28 @@ return {
       },
     })
 
-
     local cmp = require('cmp')
     local cmp_action = require('lsp-zero').cmp_action()
     local luasnip = require('luasnip')
     require('luasnip.loaders.from_vscode').lazy_load()
     local cmp_autopairs = require('nvim-autopairs.completion.cmp')
     local handlers = require('nvim-autopairs.completion.handlers')
-    cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({
-      filetypes = {
-        ['*'] = {
-          ['('] = {
-            kind = {
-              cmp.lsp.CompletionItemKind.Function,
-              cmp.lsp.CompletionItemKind.Method,
+    cmp.event:on(
+      'confirm_done',
+      cmp_autopairs.on_confirm_done({
+        filetypes = {
+          ['*'] = {
+            ['('] = {
+              kind = {
+                cmp.lsp.CompletionItemKind.Function,
+                cmp.lsp.CompletionItemKind.Method,
+              },
+              handler = handlers['*'],
             },
-            handler = handlers['*'],
           },
         },
-      },
-    }))
+      })
+    )
 
     local cmp_select = { behavior = cmp.SelectBehavior.Select }
     local cmp_mappings = lsp.defaults.cmp_mappings({
@@ -208,8 +236,8 @@ return {
         error = 'E',
         warn = 'W',
         hint = 'H',
-        info = 'I'
-      }
+        info = 'I',
+      },
     })
 
     lsp.on_attach(function(_, bufnr)
