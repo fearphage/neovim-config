@@ -2,28 +2,28 @@ return {
   {
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
-    cmd = "BufRead",
+    cmd = 'BufRead',
     config = function()
-      require 'nvim-treesitter.configs'.setup({
+      require('nvim-treesitter.configs').setup({
         -- A list of parser names, or "all"
         ensure_installed = {
-          "bash",
-          "go",
-          "help",
-          "html",
-          "javascript",
-          "json",
-          "lua",
-          "make",
-          "markdown",
-          "query", --- treesitter playground
-          "rust",
-          "svelte",
-          "tsx",
-          "typescript",
-          "vim",
-          "vue",
-          "yaml",
+          'bash',
+          'go',
+          'help',
+          'html',
+          'javascript',
+          'json',
+          'lua',
+          'make',
+          'markdown',
+          'query', --- treesitter playground
+          'rust',
+          'svelte',
+          'tsx',
+          'typescript',
+          'vim',
+          'vue',
+          'yaml',
         },
 
         -- Install parsers synchronously (only applied to `ensure_installed`)
@@ -59,20 +59,20 @@ return {
             enable = true,
             set_jumps = true, -- whether to set jumps in the jumplist
             goto_next_start = {
-              ["]m"] = "@function.outer",
-              ["]]"] = { query = "@class.outer", desc = "Next class start" },
+              [']m'] = '@function.outer',
+              [']]'] = { query = '@class.outer', desc = 'Next class start' },
             },
             goto_next_end = {
-              ["]M"] = "@function.outer",
-              ["]["] = "@class.outer",
+              [']M'] = '@function.outer',
+              [']['] = '@class.outer',
             },
             goto_previous_start = {
-              ["[m"] = "@function.outer",
-              ["[["] = "@class.outer",
+              ['[m'] = '@function.outer',
+              ['[['] = '@class.outer',
             },
             goto_previous_end = {
-              ["[M"] = "@function.outer",
-              ["[]"] = "@class.outer",
+              ['[M'] = '@function.outer',
+              ['[]'] = '@class.outer',
             },
           },
           select = {
@@ -83,12 +83,12 @@ return {
 
             keymaps = {
               -- You can use the capture groups defined in textobjects.scm
-              ["af"] = "@function.outer",
-              ["if"] = "@function.inner",
-              ["ac"] = "@class.outer",
+              ['af'] = '@function.outer',
+              ['if'] = '@function.inner',
+              ['ac'] = '@class.outer',
               -- You can optionally set descriptions to the mappings (used in the desc parameter of
               -- nvim_buf_set_keymap) which plugins like which-key display
-              ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
+              ['ic'] = { query = '@class.inner', desc = 'Select inner part of a class region' },
             },
             -- You can choose the select mode (default is charwise 'v')
             --
@@ -116,10 +116,10 @@ return {
           swap = {
             enable = true,
             swap_next = {
-              ["<leader>k"] = "@parameter.inner",
+              ['<leader>k'] = '@parameter.inner',
             },
             swap_previous = {
-              ["<leader>j"] = "@parameter.inner",
+              ['<leader>j'] = '@parameter.inner',
             },
           },
         },
@@ -128,5 +128,6 @@ return {
   },
   'nvim-treesitter/playground',
   'nvim-treesitter/nvim-treesitter-textobjects',
-  'mrjones2014/nvim-ts-rainbow',
+  -- 'mrjones2014/nvim-ts-rainbow',
+  'HiPhish/nvim-ts-rainbow2',
 }
