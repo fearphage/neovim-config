@@ -21,11 +21,11 @@ return {
 
   -- easily jump to any location and enhanced f/t motions for Leap
   {
-    "ggandor/leap.nvim",
-    event = "VeryLazy",
-    dependencies = { { "ggandor/flit.nvim", opts = { labeled_modes = "nv" } } },
+    'ggandor/leap.nvim',
+    event = 'VeryLazy',
+    dependencies = { { 'ggandor/flit.nvim', opts = { labeled_modes = 'nv' } } },
     config = function(_, opts)
-      local leap = require("leap")
+      local leap = require('leap')
       for k, v in pairs(opts) do
         leap.opts[k] = v
       end
@@ -35,16 +35,16 @@ return {
 
   -- git signs
   {
-    "lewis6991/gitsigns.nvim",
-    event = { "BufReadPre", "BufNewFile" },
+    'lewis6991/gitsigns.nvim',
+    event = { 'BufReadPre', 'BufNewFile' },
     opts = {
       signs = {
-        add = { text = "▎" },
-        change = { text = "▎" },
-        delete = { text = "契" },
-        topdelete = { text = "契" },
-        changedelete = { text = "▎" },
-        untracked = { text = "▎" },
+        add = { text = '▎' },
+        change = { text = '▎' },
+        delete = { text = '契' },
+        topdelete = { text = '契' },
+        changedelete = { text = '▎' },
+        untracked = { text = '▎' },
       },
       on_attach = function(buffer)
         local gs = package.loaded.gitsigns
@@ -72,16 +72,16 @@ return {
 
   -- references
   {
-    "RRethy/vim-illuminate",
-    event = { "BufReadPost", "BufNewFile" },
+    'RRethy/vim-illuminate',
+    event = { 'BufReadPost', 'BufNewFile' },
     opts = { delay = 200 },
     config = function(_, opts)
-      require("illuminate").configure(opts)
-      vim.api.nvim_create_autocmd("FileType", {
+      require('illuminate').configure(opts)
+      vim.api.nvim_create_autocmd('FileType', {
         callback = function()
           local buffer = vim.api.nvim_get_current_buf()
-          pcall(vim.keymap.del, "n", "]]", { buffer = buffer })
-          pcall(vim.keymap.del, "n", "[[", { buffer = buffer })
+          pcall(vim.keymap.del, 'n', ']]', { buffer = buffer })
+          pcall(vim.keymap.del, 'n', '[[', { buffer = buffer })
         end,
       })
     end,
@@ -94,7 +94,7 @@ return {
 
   -- buffer remove
   {
-    "echasnovski/mini.bufremove",
+    'echasnovski/mini.bufremove',
     -- stylua: ignore
     keys = {
       { "<leader>bd", function() require("mini.bufremove").delete(0, false) end, desc = "Delete Buffer" },
@@ -104,22 +104,22 @@ return {
 
   -- better diagnostics list and others
   {
-    "folke/trouble.nvim",
-    cmd = { "TroubleToggle", "Trouble" },
+    'folke/trouble.nvim',
+    cmd = { 'TroubleToggle', 'Trouble' },
     opts = { use_diagnostic_signs = true },
     keys = {
-      { "<leader>xx", "<cmd>TroubleToggle document_diagnostics<cr>", desc = "Document Diagnostics (Trouble)" },
-      { "<leader>xX", "<cmd>TroubleToggle workspace_diagnostics<cr>", desc = "Workspace Diagnostics (Trouble)" },
-      { "<leader>xL", "<cmd>TroubleToggle loclist<cr>", desc = "Location List (Trouble)" },
-      { "<leader>xQ", "<cmd>TroubleToggle quickfix<cr>", desc = "Quickfix List (Trouble)" },
+      { '<leader>xx', '<cmd>TroubleToggle document_diagnostics<cr>', desc = 'Document Diagnostics (Trouble)' },
+      { '<leader>xX', '<cmd>TroubleToggle workspace_diagnostics<cr>', desc = 'Workspace Diagnostics (Trouble)' },
+      { '<leader>xL', '<cmd>TroubleToggle loclist<cr>', desc = 'Location List (Trouble)' },
+      { '<leader>xQ', '<cmd>TroubleToggle quickfix<cr>', desc = 'Quickfix List (Trouble)' },
     },
   },
 
   -- todo comments
   {
-    "folke/todo-comments.nvim",
-    cmd = { "TodoTrouble", "TodoTelescope" },
-    event = { "BufReadPost", "BufNewFile" },
+    'folke/todo-comments.nvim',
+    cmd = { 'TodoTrouble', 'TodoTelescope' },
+    event = { 'BufReadPost', 'BufNewFile' },
     config = true,
     -- stylua: ignore
     keys = {
@@ -141,7 +141,16 @@ return {
     enabled = false,
     event = 'VeryLazy',
     config = function()
-      require 'fearphage.copilot-vim'
+      require('fearphage.copilot-vim')
     end,
+  },
+  -- hard time - discourages/prevents repeated use of HJKL and other movements
+  {
+    'm4xshen/hardtime.nvim',
+    dependencies = {
+      'MunifTanjim/nui.nvim',
+      'nvim-lua/plenary.nvim',
+    },
+    opts = {},
   },
 }
