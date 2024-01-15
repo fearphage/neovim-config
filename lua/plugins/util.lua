@@ -36,7 +36,7 @@ return {
 		event = "VeryLazy",
 	},
 
-	"kyazdani42/nvim-web-devicons",
+	"nvim-tree/nvim-web-devicons",
 
 	-- makes some plugins dot-repeatable like leap
 	{ "tpope/vim-repeat", event = "VeryLazy" },

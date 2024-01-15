@@ -5,12 +5,12 @@ local helpers = require('fearphage.helpers')
 -- adapted from https://github.com/ethanholz/nvim-lastplace/blob/main/lua/nvim-lastplace/init.lua
 local restore_position = api.nvim_create_augroup('restore-position', {})
 
-local ignore_buftype = { "help", "nofile", "quickfix" }
-local ignore_filetype = { "gitcommit", "gitrebase", "hgcommit", "svn" }
+local ignore_buftype = { 'help', 'nofile', 'quickfix' }
+local ignore_filetype = { 'gitcommit', 'gitrebase', 'hgcommit', 'svn' }
 
 api.nvim_create_autocmd({ 'BufWinEnter', 'FileType' }, {
-  desc     = 'conditionally restore cursor position',
-  group    = restore_position,
+  desc = 'conditionally restore cursor position',
+  group = restore_position,
   callback = function()
     if vim.tbl_contains(ignore_buftype, vim.bo.buftype) then
       return
@@ -18,32 +18,32 @@ api.nvim_create_autocmd({ 'BufWinEnter', 'FileType' }, {
 
     if vim.tbl_contains(ignore_filetype, vim.bo.filetype) then
       -- reset cursor to first line
-      vim.cmd [[normal! gg]]
+      vim.cmd([[normal! gg]])
       return
     end
 
     -- If a line has already been specified on the command line, we are done
     --   nvim file +num
-    if vim.fn.line(".") > 1 then
+    if vim.fn.line('.') > 1 then
       return
     end
 
     local last_line = vim.fn.line([['"]])
-    local buff_last_line = vim.fn.line("$")
+    local buff_last_line = vim.fn.line('$')
 
     -- If the last line is set and the less than the last line in the buffer
     if last_line > 0 and last_line <= buff_last_line then
-      local win_last_line = vim.fn.line("w$")
-      local win_first_line = vim.fn.line("w0")
+      local win_last_line = vim.fn.line('w$')
+      local win_first_line = vim.fn.line('w0')
       -- Check if the last line of the buffer is the same as the win
       if win_last_line == buff_last_line then
         -- Set line to last line edited
-        vim.cmd [[normal! g`"]]
+        vim.cmd([[normal! g`"]])
         -- Try to center
       elseif buff_last_line - last_line > ((win_last_line - win_first_line) / 2) - 1 then
-        vim.cmd [[normal! g`"zz]]
+        vim.cmd([[normal! g`"zz]])
       else
-        vim.cmd [[normal! G'"<c-e>]]
+        vim.cmd([[normal! G'"<c-e>]])
       end
     end
   end,
@@ -98,10 +98,10 @@ function autocommands.load_commands()
       },
       {
         'BufRead',
-        "*",
+        '*',
         function()
-          if vim.bo.fileencoding ~= "utf-8" then
-            vim.notify("File not in UTF-8 format!", vim.log.levels.WARN, { title = "nvim-config" })
+          if vim.bo.fileencoding ~= 'utf-8' then
+            vim.notify('File not in UTF-8 format!', vim.log.levels.WARN, { title = 'nvim-config' })
           end
         end,
         'warn when file is not in utf-8 format',
@@ -128,8 +128,8 @@ function autocommands.load_commands()
         'FileType',
         'gitcommit,markdown,rst',
         function()
-          vim.cmd [[setlocal spell]]
-          vim.cmd [[setlocal complete+=kspell]]
+          vim.cmd([[setlocal spell]])
+          vim.cmd([[setlocal complete+=kspell]])
         end,
       },
       {
