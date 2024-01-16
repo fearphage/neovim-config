@@ -61,7 +61,7 @@ return {
             prepend_args = { '--arrow-parens', 'avoid', '--jsx-single-quote', '--single-quote' },
           },
           shfmt = {
-            prepend_args = { '--indent', '2', '--space-redirects' },
+            prepend_args = { '--indent', '2', '--keep-padding', '--space-redirects', '--switch-case-indent' },
           },
           stylua = {
             prepend_args = {
