@@ -84,6 +84,7 @@ return {
 
     lsp.ensure_installed({
       'bashls',
+      'cssls',
       'dockerls',
       'eslint',
       'gopls',
