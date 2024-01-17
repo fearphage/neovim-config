@@ -155,8 +155,11 @@ return {
   {
     'stevearc/aerial.nvim',
     lazy = true,
+    keys = {
+      { '<leader>ta', '<cmd>Telescope aerial<cr>', desc = 'Aeriel' },
+    },
     config = function()
-      require('telescope').load_extensions('aerial')
+      require('telescope').load_extension('aerial')
     end,
   },
   {
@@ -180,6 +183,12 @@ return {
   {
     'nvim-telescope/telescope-github.nvim',
     lazy = true,
+    keys = {
+      { '<leader>fgg', '<cmd>Telescope gh gist<cr>', desc = 'GitHub Gist' },
+      { '<leader>fgi', '<cmd>Telescope gh issues<cr>', desc = 'GitHub Issue' },
+      { '<leader>fgp', '<cmd>Telescope gh pull_request<cr>', desc = 'GitHub Pull Request' },
+      { '<leader>fgr', '<cmd>Telescope gh run<cr>', desc = 'GitHub Run' },
+    },
     config = function()
       require('telescope').load_extension('gh')
     end,

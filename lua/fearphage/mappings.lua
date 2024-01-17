@@ -148,8 +148,7 @@ if enabled(group, 'dap') then
   keymap('n', '<leader>dgt', '<CMD>lua require("dap-go").debug_test()<CR>')
 end
 
-keymap('i', '<C-s>', '<ESC>:w<CR>')
-keymap('n', '<C-s>', ':w<CR>')
+keymap({ 'i', 'n', 's', 'x' }, '<C-s>', '<cmd>w<cr><esc>', { desc = 'Save file' })
 keymap('v', '<C-s>', "'<,'>sort<CR>", { silent = true })
 keymap('n', ']d', '<CMD>lua vim.lsp.diagnostic.goto_next({ popup_opts = { border = lvim.lsp.popup_border } })<CR>')
 keymap('n', '[d', '<CMD>lua vim.lsp.diagnostic.goto_prev({ popup_opts = { border = lvim.lsp.popup_border } })<CR>')

@@ -153,4 +153,10 @@ return {
     },
     opts = {},
   },
+
+  {
+    'karb94/neoscroll.nvim',
+    event = { 'CursorHold', 'CursorHoldI' },
+    config = true,
+  },
 }

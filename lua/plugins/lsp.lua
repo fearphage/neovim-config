@@ -244,10 +244,10 @@ return {
     lsp.set_preferences({
       suggest_lsp_servers = false,
       sign_icons = {
-        error = 'E',
-        warn = 'W',
-        hint = 'H',
-        info = 'I',
+        error = '✘',
+        warn = '▲',
+        hint = '⚑',
+        info = '»',
       },
     })
 
@@ -274,7 +274,8 @@ return {
       -- vim.keymap.set('n', '<leader>e', vim.lsp.diagnostic.show_line_diagnostics, opts)
       vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, opts)
       vim.keymap.set('i', '<C-h>', vim.lsp.buf.signature_help, opts)
-      vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
+      -- vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
+      vim.keymap.set('n', 'gK', vim.lsp.buf.signature_help, opts)
     end)
 
     lsp.setup()
