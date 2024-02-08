@@ -87,12 +87,14 @@ return {
       'cssls',
       'dockerls',
       'eslint',
+      -- 'groovyls', -- requires Java :'('
       'gopls',
       'jsonls',
       'lua_ls',
-      -- 'remark_ls', -- markdown
+      'remark_ls', -- markdown
       'rust_analyzer',
       'tailwindcss',
+      'terraformls',
       'tsserver',
       --'vim-language-server',
       'yamlls',
@@ -120,6 +122,12 @@ return {
         },
       },
     })
+
+    -- trying to use groovyls without installing java
+    -- lsp.configure('groovyls', {
+    --   cmd = { 'docker', 'run', '--rm', '--interactive', 'justin2004/groovy-language-server_box' },
+    -- })
+    --
     -- Fix Undefined global 'vim'
     lsp.configure('lua_ls', {
       settings = {

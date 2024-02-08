@@ -80,11 +80,6 @@ function autocommands.load_commands()
       -- { 'BufEnter', '*', [[setlocal  cursorline]] },
       --
       {
-        'BufRead,BufNewFile',
-        'Jenkinsfile',
-        [[setlocal shiftwidth=4 softtabstop=4 tabstop=4 ft=groovy]],
-      },
-      {
         'BufEnter,CmdlineLeave,FocusGained,InsertLeave,WinEnter',
         '*',
         [[if &number | setlocal relativenumber | endif]],

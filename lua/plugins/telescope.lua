@@ -5,6 +5,7 @@ return {
     'nvim-telescope/telescope.nvim',
     event = 'VeryLazy',
     -- version = false, -- telescope did only one release, so use HEAD for now
+    -- stylua: ignore
     keys = {
       { '<leader>,', '<cmd>Telescope buffers show_all_buffers=true<cr>', desc = 'Switch Buffer' },
       { '<leader>/', helpers.telescope('live_grep'), desc = 'Find in Files (Grep)' },
@@ -204,10 +205,10 @@ return {
     'nvim-telescope/telescope-dap.nvim',
     lazy = true,
     keys = {
-      { '<leader>fdb', '<esc><Cmd>Telescope dap list_breakpoints<cr>', desc = 'DAP Commands' },
-      { '<leader>fdc', '<esc><Cmd>Telescope dap configurations<cr>', desc = 'DAP Commands' },
+      { '<leader>fdb', '<esc><Cmd>Telescope dap list_breakpoints<cr>', desc = 'DAP list breakpoints' },
+      { '<leader>fdc', '<esc><Cmd>Telescope dap configurations<cr>', desc = 'DAP configuration' },
       { '<leader>fdd', '<esc><Cmd>Telescope dap commands<cr>', desc = 'DAP Commands' },
-      { '<leader>fdv', '<esc><Cmd>Telescope dap variables<cr>', desc = 'DAP Commands' },
+      { '<leader>fdv', '<esc><Cmd>Telescope dap variables<cr>', desc = 'DAP variables' },
     },
     config = function()
       require('telescope').load_extension('dap')
