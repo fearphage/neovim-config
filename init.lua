@@ -1,1 +1,2 @@
-require('fearphage')
+-- require('fearphage')
+require('config.lazy')

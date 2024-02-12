@@ -56,12 +56,7 @@ end
 function M.get_nvm_version()
   local actual_version = vim.version()
 
-  return string.format(
-    '%d.%d.%d',
-    actual_version.major,
-    actual_version.minor,
-    actual_version.patch
-  )
+  return string.format('%d.%d.%d', actual_version.major, actual_version.minor, actual_version.patch)
 end
 
 M.root_patterns = {
@@ -95,7 +90,9 @@ function M.get_root()
         end
       end
     end
-  end  table.sort(roots, function(a, b)
+  end
+
+  table.sort(roots, function(a, b)
     return #a > #b
   end)
   ---@type string?
