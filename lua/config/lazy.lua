@@ -34,6 +34,9 @@ require('lazy').setup({
     -- import/override with your plugins
     { import = 'plugins' },
   },
+  -- limits concurrency to prevent 'fetch failed' errors
+  -- https://github.com/folke/lazy.nvim/issues/648#issuecomment-1753316146
+  concurrency = 16,
   defaults = {
     -- By default, only LazyVim plugins will be lazy-loaded. Your custom plugins will load during startup.
     -- If you know what you're doing, you can set this to `true` to have all your custom plugins lazy-loaded by default.
