@@ -56,6 +56,7 @@ return {
         },
       },
       opts = {
+        -- stylelia: ignore
         formatters = {
           prettier = {
             prepend_args = { '--arrow-parens', 'avoid', '--jsx-single-quote', '--single-quote' },
@@ -64,14 +65,7 @@ return {
             prepend_args = { '--indent', '2', '--keep-padding', '--space-redirects', '--switch-case-indent' },
           },
           stylua = {
-            prepend_args = {
-              '--indent-type',
-              'Spaces',
-              '--indent-width',
-              '2',
-              '--quote-style',
-              'AutoPreferSingle',
-            },
+            prepend_args = { '--indent-type', 'Spaces', '--indent-width', '2', '--quote-style', 'AutoPreferSingle' },
           },
         },
       },
@@ -87,8 +81,8 @@ return {
       'cssls',
       'dockerls',
       'eslint',
-      -- 'groovyls', -- requires Java :'('
       'gopls',
+      -- 'groovyls', -- requires Java :'('
       'jsonls',
       'lua_ls',
       'remark_ls', -- markdown
@@ -128,12 +122,17 @@ return {
     --   cmd = { 'docker', 'run', '--rm', '--interactive', 'justin2004/groovy-language-server_box' },
     -- })
     --
-    -- Fix Undefined global 'vim'
     lsp.configure('lua_ls', {
       settings = {
         Lua = {
           diagnostics = {
+            -- Fix Undefined global 'vim'
             globals = { 'vim' },
+          },
+          workspace = {
+            -- https://github.com/LunarVim/LunarVim/issues/4049
+            checkThirdParty = false,
+            hint = { enabled = true },
           },
         },
       },
@@ -259,8 +258,17 @@ return {
       },
     })
 
-    lsp.on_attach(function(_, bufnr)
+    lsp.on_attach(function(client, bufnr)
       local opts = { buffer = bufnr, remap = false }
+
+      if client.name == 'gopls' and not client.server_capabilities.semanticTokensProvider then
+        local semantic = client.config.capabilities.textDocument.semanticTokens
+        client.server_capabilities.semanticTokensProvider = {
+          full = true,
+          legend = { tokenModifiers = semantic.tokenModifiers, tokenTypes = semantic.tokenTypes },
+          range = true,
+        }
+      end
 
       -- if client.name == 'eslint' then
       --   vim.cmd.LspStop('eslint')
