@@ -14,16 +14,21 @@ return {
   --]]
 
   {
+    'mattn/emmet-vim',
+    event = 'VeryLazy',
+  },
+  {
     'windwp/nvim-autopairs',
     event = 'InsertEnter',
-    opts = {},
+    config = true,
   },
 
   -- easily jump to any location and enhanced f/t motions for Leap
   {
     'ggandor/leap.nvim',
     event = 'VeryLazy',
-    dependencies = { { 'ggandor/flit.nvim', opts = { labeled_modes = 'nv' } } },
+    dependencies = { 'ggandor/flit.nvim' },
+    opts = { labeled_modes = 'nv' },
     config = function(_, opts)
       local leap = require('leap')
       for k, v in pairs(opts) do
