@@ -52,7 +52,6 @@ return {
   {
     'folke/tokyonight.nvim',
     lazy = true,
-    --name = 'tokyonight',
     opts = {
       -- floats = 'transparent',
       style = 'moon',
