@@ -127,6 +127,24 @@ function autocommands.load_commands()
           vim.cmd([[setlocal complete+=kspell]])
         end,
       },
+      -- { -- moved to after/
+      --   'FileType',
+      --   -- this doesn't work for lua
+      --   'json,lua',
+      --   function()
+      --     helpers.keymap('n', 'o', function()
+      --       local line = vim.api.nvim_get_current_line()
+      --       local should_add_comma = string.find(line, '[^,{[]$')
+      --
+      --       if should_add_comma then
+      --         return 'A,<cr>'
+      --       else
+      --         return 'o'
+      --       end
+      --     end, { buffer = true, expr = true })
+      --   end,
+      --   'append a trailing comma automatically when you start editing the next line',
+      -- },
       {
         'TextYankPost',
         '*',
