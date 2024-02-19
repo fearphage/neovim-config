@@ -1,14 +1,6 @@
 local fn = vim.fn
--- not used... yet
--- local Util = require('lazy.core.util')
 
 local M = {}
-
---[[ unused
-function M.deprecate(old, new)
-  Util.warn(('`%s` is deprecated. Please use `%s` instead'):format(old, new), { title = 'LazyVim' })
-end
-]]
 
 -- creates floating terminal for toggleterm
 function M.create_floating_terminal(term, cmd)
