@@ -17,11 +17,6 @@ return {
     'mattn/emmet-vim',
     event = 'VeryLazy',
   },
-  {
-    'windwp/nvim-autopairs',
-    event = 'InsertEnter',
-    config = true,
-  },
 
   -- easily jump to any location and enhanced f/t motions for Leap
   {

@@ -286,4 +286,17 @@ return {
 
   -- ui components
   { 'MunifTanjim/nui.nvim', lazy = true },
+  -- Navic and NavBuddy work together
+  'SmiteshP/nvim-navic',
+  {
+    'SmiteshP/nvim-navbuddy',
+    cmd = 'NavBuddy',
+    dependencies = {
+      'neovim/nvim-lspconfig',
+      'SmiteshP/nvim-navic',
+      'MunifTanjim/nui.nvim',
+      'numToStr/Comment.nvim', -- Optional
+      'nvim-telescope/telescope.nvim', -- Optional
+    },
+  },
 }
