@@ -58,6 +58,22 @@ function M.on_attach(client, buffer)
   -- map("n", "<leader>cla", "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>", opts, "Add workspace folder")
   -- map("n", "<leader>clr", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>", opts, "Remove workspace folder")
   -- map("n", "<leader>cll", "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>", opts, "List workspace folders")
+  local navic_status_ok, navic = pcall(require, 'nvim-navic')
+  if not navic_status_ok then
+    vim.notify('Navic not found', 'warn')
+    return
+  end
+
+  local navbuddy_status_ok, navbuddy = pcall(require, 'nvim-navbuddy')
+  if not navbuddy_status_ok then
+    vim.notify('Navbuddy not found', 'warn')
+    return
+  end
+
+  if client.server_capabilities.documentSymbolProvider then
+    navic.attach(client, buffer)
+    navbuddy.attach(client, buffer)
+  end
 end
 
 function M.new(client, buffer)
