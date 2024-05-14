@@ -159,4 +159,9 @@ return {
     event = { 'CursorHold', 'CursorHoldI' },
     config = true,
   },
+
+  {
+    'junegunn/vim-easy-align',
+    event = 'VeryLazy',
+  },
 }
