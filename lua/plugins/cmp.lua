@@ -13,7 +13,6 @@ return {
   {
     'hrsh7th/nvim-cmp',
     dependencies = {
-      -- "copilot-cmp",
       'L3MON4D3/LuaSnip',
       'f3fora/cmp-spell',
       'hrsh7th/cmp-buffer',
@@ -31,47 +30,15 @@ return {
       { 'petertriho/cmp-git', dependencies = 'nvim-lua/plenary.nvim' },
     },
     opts = {},
-    -- opts = {
-    --   snippet = {
-    --     expand = function(args)
-    --       require('luasnip').lsp_expand(args.body)
-    --     end,
-    --   },
-    --
-    --   sources = {
-    --     { name = 'luasnip' },
-    --     -- more sources
-    --   },
-    -- },
-    config = function(plugin, opts)
+    config = function()
       local cmp = require('cmp')
       local cmp_action = require('lsp-zero').cmp_action()
       local lspkind = require('lspkind')
       local luasnip = require('luasnip')
       require('luasnip.loaders.from_vscode').lazy_load()
       local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-      local handlers = require('nvim-autopairs.completion.handlers')
 
       local cmp_select = { behavior = cmp.SelectBehavior.Select }
-
-      -- local cmp_mappings = lsp.defaults.cmp_mappings({ -- from old lsp-zero config
-      --   ['<C-k>'] = cmp.mapping.select_prev_item(cmp_select), -- custom adds by Phred
-      --   ['<C-j>'] = cmp.mapping.select_next_item(cmp_select), -- custom adds by Phred
-      --   ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
-      --   ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
-      --   ['<C-y>'] = cmp.mapping.confirm({ select = true }),
-      --   ['<C-f>'] = cmp_action.luasnip_jump_forward(),
-      --   ['<C-b>'] = cmp_action.luasnip_jump_backward(),
-      --   ['<C-e>'] = cmp.mapping.abort(), -- close completion window
-      --   ['<C-Space>'] = cmp.mapping.complete(), -- show completion suggestions
-      --   ['<C-u>'] = cmp.mapping.scroll_docs(-4), -- scroll up the documentation window
-      --   ['<C-d>'] = cmp.mapping.scroll_docs(4), -- scroll down the documentation window
-      -- })
-
-      -- disable completion with tab
-      -- this helps with copilot setup
-      -- cmp_mappings['<Tab>'] = nil
-      -- cmp_mappings['<S-Tab>'] = nil
 
       cmp.setup({
         -- mapping = cmp_mappings,
@@ -186,6 +153,7 @@ return {
           },
         },
         sources = {
+          { name = 'lazydev', group_index = 0 },
           { name = 'crates', group_index = 1 },
           { name = 'copilot', max_item_count = 3, group_index = 2 },
           { name = 'nvim_lsp', max_item_count = 5, group_index = 2, keyword_length = 3 },
@@ -260,73 +228,6 @@ return {
         }, {
           { name = 'cmdline' },
         }),
-      })
-    end,
-  },
-  {
-    'petertriho/cmp-git',
-    dependencies = 'nvim-lua/plenary.nvim',
-    config = function()
-      local format = require('cmp_git.format')
-      local sort = require('cmp_git.sort')
-
-      require('cmp_git').setup({
-        -- defaults
-        filetypes = { 'gitcommit', 'octo' },
-        remotes = { 'upstream', 'origin' }, -- in order of most to least prioritized
-        enableRemoteUrlRewrites = false, -- enable git url rewrites, see https://git-scm.com/docs/git-config#Documentation/git-config.txt-urlltbasegtinsteadOf
-        git = {
-          commits = {
-            limit = 100,
-            sort_by = sort.git.commits,
-            format = format.git.commits,
-          },
-        },
-        github = {
-          issues = {
-            fields = { 'title', 'number', 'body', 'updatedAt', 'state' },
-            filter = 'all', -- assigned, created, mentioned, subscribed, all, repos
-            limit = 100,
-            state = 'open', -- open, closed, all
-            sort_by = sort.github.issues,
-            format = format.github.issues,
-          },
-          mentions = {
-            limit = 100,
-            sort_by = sort.github.mentions,
-            format = format.github.mentions,
-          },
-          pull_requests = {
-            fields = { 'title', 'number', 'body', 'updatedAt', 'state' },
-            limit = 100,
-            state = 'open', -- open, closed, merged, all
-            sort_by = sort.github.pull_requests,
-            format = format.github.pull_requests,
-          },
-        },
-        trigger_actions = {
-          {
-            debug_name = 'git_commits',
-            trigger_character = ':',
-            action = function(sources, trigger_char, callback, params, git_info)
-              return sources.git:get_commits(callback, params, trigger_char)
-            end,
-          },
-          {
-            debug_name = 'github_issues_and_pr',
-            trigger_character = '#',
-            action = function(sources, trigger_char, callback, params, git_info)
-              return sources.github:get_issues_and_prs(callback, git_info, trigger_char)
-            end,
-          },
-          {
-            debug_name = 'github_mentions',
-            trigger_character = '@',
-            action = function(sources, trigger_char, callback, params, git_info)
-              return sources.github:get_mentions(callback, git_info, trigger_char)
-            end,
-          },
-        },
       })
     end,
   },

@@ -3,10 +3,14 @@ return {
     'neovim/nvim-lspconfig',
     event = 'BufReadPre',
     dependencies = {
-      { 'mason.nvim' },
-      { 'williamboman/mason-lspconfig.nvim' },
-      { 'hrsh7th/cmp-nvim-lsp' },
-      -- { 'rust-tools.nvim' },
+      'mason.nvim',
+      'williamboman/mason-lspconfig.nvim',
+      'hrsh7th/cmp-nvim-lsp',
+      {
+        'mrcjkb/rustaceanvim',
+        version = '^4', -- Recommended
+        lazy = false, -- This plugin is already lazy
+      },
     },
     opts = {
       servers = {
