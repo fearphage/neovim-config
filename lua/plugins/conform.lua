@@ -42,6 +42,9 @@ return {
     ]]--
     -- stylua: ignore
     formatters = {
+      biome = {
+        prepend_args = { 'format' , '--arrow-parentheses', 'as-needed', '--indent-style', 'space', '--semicolons', 'always', '--quote-style', 'single' }
+      },
       npm_groovy_lint = {
         command = "npm-groovy-lint",
         args = { '--failon', 'none', '--format', '$FILENAME'},
@@ -52,7 +55,7 @@ return {
         prepend_args = { '--arrow-parens', 'avoid', '--jsx-single-quote', '--single-quote' },
       },
       shfmt = {
-        prepend_args = { '--indent', '2', '--keep-padding', '--space-redirects', '--switch-case-indent' },
+        prepend_args = { '--case-indent', '--indent', '2', '--keep-padding', '--space-redirects' },
       },
       stylua = {
         prepend_args = { '--indent-type', 'Spaces', '--indent-width', '2', '--quote-style', 'AutoPreferSingle' },

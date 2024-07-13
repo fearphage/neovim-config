@@ -162,6 +162,7 @@ M.lsp_servers = {
       },
     },
   },
+  nil_ls = {}, -- nix
   pyright = {},
   remark_ls = {}, -- markdown
   -- rust-tools configures this
