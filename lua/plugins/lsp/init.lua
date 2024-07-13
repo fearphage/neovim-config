@@ -1,19 +1,8 @@
 return {
   {
-    'folke/neodev.nvim',
-    opts = {
-      library = {
-        plugins = { 'nvim-treesitter', 'plenary.nvim', 'telescope.nvim', 'neotest' },
-        types = true,
-      },
-    },
-    config = true,
-  },
-  {
     'neovim/nvim-lspconfig',
     event = 'BufReadPre',
     dependencies = {
-      { 'neodev.nvim' },
       { 'mason.nvim' },
       { 'williamboman/mason-lspconfig.nvim' },
       { 'hrsh7th/cmp-nvim-lsp' },
@@ -24,6 +13,11 @@ return {
         bashls = {},
         cssls = {},
         dockerls = {},
+        gleam = {
+          cmd = { 'gleam', 'lsp' },
+          filetypes = { 'gleam' },
+          root_dir = require('lspconfig.util').root_pattern('gleam.toml', '.git'),
+        },
         gopls = {
           cmd = { 'gopls', '-remote.debug=:0' },
           filetypes = { 'go', 'gomod', 'gohtmltmpl', 'gosum', 'gotexttmpl', 'gotmpl', 'gowork' },
