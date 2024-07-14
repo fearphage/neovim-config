@@ -74,17 +74,17 @@ M.root_patterns = {
 function M.get_root()
   ---@type string?
   local path = vim.api.nvim_buf_get_name(0)
-  path = path ~= '' and vim.loop.fs_realpath(path) or nil
+  path = path ~= '' and (vim.uv or vim.loop).fs_realpath(path) or nil
   ---@type string[]
   local roots = {}
   if path then
-    for _, client in pairs(vim.lsp.get_active_clients({ bufnr = 0 })) do
+    for _, client in pairs(vim.lsp.get__clients({ bufnr = 0 })) do
       local workspace = client.config.workspace_folders
       local paths = workspace and vim.tbl_map(function(ws)
         return vim.uri_to_fname(ws.uri)
       end, workspace) or client.config.root_dir and { client.config.root_dir } or {}
       for _, p in ipairs(paths) do
-        local r = vim.loop.fs_realpath(p)
+        local r = (vim.uv or vim.loop).fs_realpath(p)
         if path:find(r, 1, true) then
           roots[#roots + 1] = r
         end
@@ -117,6 +117,9 @@ end
 
 -- helper for cmp completion
 function M.has_words_before()
+  if vim.api.nvim_buf_get_value(0, 'buftype') == 'prompt' then
+    return false
+  end
   local line, col = table.unpack(vim.api.nvim_win_get_cursor(0))
   return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match('%s') == nil
 end
@@ -132,7 +135,7 @@ function M.keymap(mode, lhs, rhs, opts)
 end
 
 -- this will return a function that calls telescope.
--- cwd will defautlt to lazyvim.util.get_root
+-- cwd will default to lazyvim.util.get_root
 -- for `files`, git_files or find_files will be chosen depending on .git
 function M.telescope(builtin, opts)
   local params = { builtin = builtin, opts = opts }
