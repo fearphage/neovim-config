@@ -114,11 +114,7 @@ M.lsp_servers = {
   bashls = {},
   cssls = {},
   dockerls = {},
-  gleam = {
-    cmd = { 'gleam', 'lsp' },
-    filetypes = { 'gleam' },
-    root_dir = require('lspconfig.util').root_pattern('gleam.toml', '.git'),
-  },
+  gleam = {},
   gopls = {
     cmd = { 'gopls', '-remote.debug=:0' },
     filetypes = { 'go', 'gomod', 'gohtmltmpl', 'gosum', 'gotexttmpl', 'gotmpl', 'gowork' },
