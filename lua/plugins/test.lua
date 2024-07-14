@@ -2,14 +2,15 @@ return {
   {
     'nvim-neotest/neotest',
     dependencies = {
+      'nvim-neotest/nvim-nio',
       'nvim-lua/plenary.nvim',
       'antoinemadec/FixCursorHold.nvim',
       'nvim-neotest/neotest-go',
       'rouge8/neotest-rust',
     },
     config = function()
-      -- get neotest namespace (api call creates or returns namespace)
       local neotest_ns = vim.api.nvim_create_namespace('neotest')
+
       vim.diagnostic.config({
         virtual_text = {
           format = function(diagnostic)
@@ -20,19 +21,12 @@ return {
       }, neotest_ns)
 
       require('neotest').setup({
-        -- adapters = { 'neotest-plenary' },
         adapters = {
           require('neotest-go'),
           require('neotest-rust')({ args = { '--no-capture' }, dap_adapter = 'codelldb' }),
         },
 
-        -- Example for loading neotest-go with a custom config
-        -- adapters = {
-        --   ['neotest-go'] = {
-        --     args = { '-tags=integration' },
-        --   },
-        -- },
-        output = { enabled = true, open_on_run = true },
+        -- output = { enabled = true, open_on_run = true },
         quickfix = {
           enabled = true,
           open = function()
@@ -43,7 +37,11 @@ return {
             end
           end,
         },
-        status = { enabled = true, virtual_text = true },
+        status = {
+          enabled = true,
+          signs = true,
+          virtual_text = true,
+        },
       })
     end,
   },
