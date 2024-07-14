@@ -32,13 +32,28 @@ return {
     opts = {},
     config = function()
       local cmp = require('cmp')
-      local cmp_action = require('lsp-zero').cmp_action()
-      local lspkind = require('lspkind')
-      local luasnip = require('luasnip')
-      require('luasnip.loaders.from_vscode').lazy_load()
       local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-
       local cmp_select = { behavior = cmp.SelectBehavior.Select }
+      local luasnip = require('luasnip')
+      local lspkind = require('lspkind')
+
+      require('luasnip.loaders.from_vscode').lazy_load()
+
+      local luasnip_jump_forward = function(fallback)
+        if luasnip.jumpable(1) then
+          luasnip.jump(1)
+        else
+          fallback()
+        end
+      end
+
+      local luasnip_jump_backward = function(fallback)
+        if luasnip.jumpable(-1) then
+          luasnip.jump(-1)
+        else
+          fallback()
+        end
+      end
 
       cmp.setup({
         -- mapping = cmp_mappings,
@@ -48,8 +63,8 @@ return {
           ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
           ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
           ['<C-y>'] = cmp.mapping.confirm({ select = true }),
-          ['<C-f>'] = cmp_action.luasnip_jump_forward(),
-          ['<C-b>'] = cmp_action.luasnip_jump_backward(),
+          ['<C-f>'] = cmp.mapping(luasnip_jump_forward, { 'i', 's' }),
+          ['<C-b>'] = cmp.mapping(luasnip_jump_backward, { 'i', 's' }),
           ['<C-e>'] = cmp.mapping.abort(), -- close completion window
           ['<C-Space>'] = cmp.mapping.complete(), -- show completion suggestions
           ['<C-u>'] = cmp.mapping.scroll_docs(-4), -- scroll up the documentation window

@@ -1,21 +1,12 @@
 -- local helpers = require("fearphage.helpers")
 
 return {
-
-  --[[
-  -- search/replace in multiple files
-  {
-    "windwp/nvim-spectre",
-    -- stylua: ignore
-    keys = {
-      { "<leader>sr", function() require("spectre").open() end, desc = "Replace in files (Spectre)" },
-    },
-  },
-  --]]
-
   {
     'mattn/emmet-vim',
     event = 'VeryLazy',
+    keys = {
+      { '<C-e>', '<plug>(emmet-expand-abbr)', mode = 'i' },
+    },
   },
 
   -- easily jump to any location and enhanced f/t motions for Leap
@@ -95,6 +86,7 @@ return {
   -- buffer remove
   {
     'echasnovski/mini.bufremove',
+    enabled = false,
     -- stylua: ignore
     keys = {
       { "<leader>bd", function() require("mini.bufremove").delete(0, false) end, desc = "Delete Buffer" },

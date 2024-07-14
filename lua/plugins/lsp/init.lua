@@ -1,3 +1,5 @@
+local user_config = require('fearphage.user-config')
+
 return {
   {
     'neovim/nvim-lspconfig',
@@ -13,110 +15,7 @@ return {
       },
     },
     opts = {
-      servers = {
-        bashls = {},
-        cssls = {},
-        dockerls = {},
-        gleam = {
-          cmd = { 'gleam', 'lsp' },
-          filetypes = { 'gleam' },
-          root_dir = require('lspconfig.util').root_pattern('gleam.toml', '.git'),
-        },
-        gopls = {
-          cmd = { 'gopls', '-remote.debug=:0' },
-          filetypes = { 'go', 'gomod', 'gohtmltmpl', 'gosum', 'gotexttmpl', 'gotmpl', 'gowork' },
-          settings = {
-            gopls = {
-              analyses = {
-                ST1003 = true,
-                fieldalignment = true,
-                nilness = true,
-                nonewvars = true,
-                shadow = true,
-                undeclaredname = true,
-                unreachable = true,
-                unusedparams = true,
-                unusedwrite = true,
-                useany = true,
-              },
-              completeUnimported = true,
-              usePlaceholders = true,
-            },
-          },
-        },
-        -- groovyls = {}, -- requires Java :'('
-        html = {},
-        jsonls = {},
-        lua_ls = {
-          settings = {
-            Lua = {
-              completion = {
-                callSnippet = 'Replace',
-              },
-              diagnostics = {
-                -- Fix Undefined global 'vim'
-                globals = { 'vim' },
-              },
-              hint = { enable = true },
-              telemetry = { enable = false },
-              workspace = {
-                checkThirdParty = false,
-              },
-            },
-          },
-        },
-        nil_ls = {}, -- nix
-        pyright = {},
-        remark_ls = {}, -- markdown
-        -- rust-tools configures this
-        -- rust_analyzer = {},
-        svelte = {},
-        tailwindcss = {},
-        terraformls = {
-          filetypes = { 'tf', 'terraform' },
-        },
-        texlab = {
-          settings = {
-            latex = {
-              build = {
-                executable = 'pdflatex',
-                onSave = true,
-              },
-            },
-          },
-        },
-        tsserver = {
-          settings = {
-            javascript = {
-              inlayHints = {
-                includeInlayParameterNameHints = 'all',
-                includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-                includeInlayFunctionParameterTypeHints = true,
-                includeInlayVariableTypeHints = true,
-                includeInlayVariableTypeHintsWhenTypeMatchesName = true,
-                includeInlayPropertyDeclarationTypeHints = true,
-                includeInlayFunctionLikeReturnTypeHints = true,
-                includeInlayEnumMemberValueHints = true,
-              },
-            },
-            typescript = {
-              inlayHints = {
-                includeInlayParameterNameHints = 'all',
-                includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-                includeInlayFunctionParameterTypeHints = true,
-                includeInlayVariableTypeHints = true,
-                includeInlayVariableTypeHintsWhenTypeMatchesName = true,
-                includeInlayPropertyDeclarationTypeHints = true,
-                includeInlayFunctionLikeReturnTypeHints = true,
-                includeInlayEnumMemberValueHints = true,
-              },
-            },
-          },
-        },
-        vimls = {},
-        vuels = {},
-        yamlls = {},
-      },
+      servers = user_config.lsp_servers,
     },
     setup = {},
     config = function(plugin, opts)
@@ -144,7 +43,10 @@ return {
           local semantic = client.config.capabilities.textDocument.semanticTokens
           client.server_capabilities.semanticTokensProvider = {
             full = true,
-            legend = { tokenModifiers = semantic.tokenModifiers, tokenTypes = semantic.tokenTypes },
+            legend = {
+              tokenModifiers = semantic.tokenModifiers,
+              tokenTypes = semantic.tokenTypes,
+            },
             range = true,
           }
         end
