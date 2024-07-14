@@ -1,3 +1,4 @@
+local helpers = require('fearphage.helpers')
 local user_config = require('fearphage.user-config')
 
 return {
@@ -33,7 +34,7 @@ return {
       })
       -- set diagnostic signs?
 
-      require('lazyvim.util').lsp.on_attach(function(client, buffer)
+      helpers.on_attach(function(client, buffer)
         require('cwebster.plugins.lsp.format').on_attach(client, buffer)
         require('cwebster.plugins.lsp.keymaps').on_attach(client, buffer)
 
