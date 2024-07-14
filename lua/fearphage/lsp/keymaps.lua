@@ -34,7 +34,7 @@ function M.on_attach(client, buffer)
   self:map('<leader>xW', 'Telescope lsp_workspace_diagnostics', { desc = 'Open workspace diagnostics in telescope' })
   self:map('gh', 'Telescope lsp_document_symbols', { desc = 'Show lsp symbols in telescope' })
 
-  local format = require('cwebster.plugins.lsp.format')
+  local format = require('fearphage.lsp.format')
   self:map('<leader>cf', format.format, { desc = 'Format Document', has = 'documentFormatting' })
   self:map('<leader>cf', format.format, { desc = 'Format Range', mode = 'v', has = 'documentRangeFormatting' })
   self:map('<leader>cr', M.rename, { expr = true, desc = 'Rename', has = 'rename' })

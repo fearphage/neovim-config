@@ -35,8 +35,8 @@ return {
       -- set diagnostic signs?
 
       helpers.on_attach(function(client, buffer)
-        require('cwebster.plugins.lsp.format').on_attach(client, buffer)
-        require('cwebster.plugins.lsp.keymaps').on_attach(client, buffer)
+        require('fearphage.lsp.format').on_attach(client, buffer)
+        require('fearphage.lsp.keymaps').on_attach(client, buffer)
 
         if client.name == 'tsserver' then
           client.server_capabilities.documentFormattingProvider = false
