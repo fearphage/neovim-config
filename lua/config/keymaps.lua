@@ -149,5 +149,3 @@ end
 keymap({ 'i', 'n', 's', 'x' }, '<C-s>', '<cmd>w<cr><esc>', { desc = 'Save file' })
 keymap('v', '<C-s>', ':sort i<CR>', { desc = 'Sort selection' })
 keymap('v', '<leader>S', ':sort i<CR>', { desc = 'Sort selection' })
-keymap('n', ']d', '<CMD>lua vim.lsp.diagnostic.goto_next({ popup_opts = { border = lvim.lsp.popup_border } })<CR>')
-keymap('n', '[d', '<CMD>lua vim.lsp.diagnostic.goto_prev({ popup_opts = { border = lvim.lsp.popup_border } })<CR>')
