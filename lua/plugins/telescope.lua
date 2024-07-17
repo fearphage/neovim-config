@@ -18,6 +18,7 @@ return {
       { '<leader>fF', helpers.telescope('files', { cwd = false }), desc = 'Find Files (cwd)' },
       { '<leader>fk', '<cmd>Telescope keymaps<cr>', desc = 'Key Maps' },
       { '<leader>fm', '<cmd>Telescope marks<cr>', desc = 'Marks' },
+      { '<leader>fn', '<cmd>Telescope notify<cr>', desc = 'Notifications' },
       { '<leader>fq', '<cmd>Telescope quickfix<cr>', desc = 'Quickfix' },
       { '<leader>fr', '<cmd>Telescope oldfiles<cr>', desc = 'Recent' },
       -- git

@@ -1,5 +1,0 @@
-require('fearphage.mappings')
-require('fearphage.filetype')
-require('fearphage.lazy')
-require('fearphage.autocmd')
-require('fearphage.settings')
