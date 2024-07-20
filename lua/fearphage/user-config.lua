@@ -86,7 +86,6 @@ M.lsp_servers = {
   bashls = {},
   cssls = {},
   dockerls = {},
-  gleam = {},
   gopls = {
     cmd = { 'gopls', '-remote.debug=:0' },
     filetypes = { 'go', 'gomod', 'gohtmltmpl', 'gosum', 'gotexttmpl', 'gotmpl', 'gowork' },
@@ -130,7 +129,7 @@ M.lsp_servers = {
       },
     },
   },
-  nil_ls = {}, -- nix
+  -- nil_ls = {}, -- nix
   pyright = {},
   -- remark_ls = {}, -- markdown
   svelte = {},
