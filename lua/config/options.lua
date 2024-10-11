@@ -37,3 +37,5 @@ vim.filetype.add({
     ['Dockerfile.*'] = 'dockerfile',
   },
 })
+
+vim.g.linterConfigs = vim.fs.normalize('~/.config/+ linter-configs/')

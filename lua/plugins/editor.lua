@@ -129,12 +129,14 @@ return {
   },
   -- copilot
   {
-    'github/copilot.vim',
-    enabled = false,
+    'zbirenbaum/copilot.lua',
     event = 'VeryLazy',
-    config = function()
-      require('fearphage.copilot-vim')
-    end,
+    config = {
+      -- auth_provider_url:
+    },
+    -- config = function()
+    --   require('fearphage.copilot-vim')
+    -- end,
   },
   -- hard time - discourages/prevents repeated use of HJKL and other movements
   {

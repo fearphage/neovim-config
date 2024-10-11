@@ -14,6 +14,7 @@ return {
         'lua',
         'make',
         'markdown',
+        'markdown_inline',
         'query', --- treesitter playground
         'rust',
         'svelte',
@@ -127,6 +128,4 @@ return {
   },
   'nvim-treesitter/playground',
   'nvim-treesitter/nvim-treesitter-textobjects',
-  -- 'mrjones2014/nvim-ts-rainbow',
-  'HiPhish/nvim-ts-rainbow2',
 }

@@ -45,6 +45,9 @@ return {
       biome = {
         prepend_args = { 'format' , '--arrow-parentheses', 'as-needed', '--indent-style', 'space', '--semicolons', 'always', '--quote-style', 'single' }
       },
+      markdownlint = {
+        -- prepend_args = { '--config', vim.g.linterConfigs .. '/markdownlint.yaml' },
+      },
       npm_groovy_lint = {
         command = "npm-groovy-lint",
         args = { '--failon', 'none', '--format', '$FILENAME'},
@@ -52,7 +55,18 @@ return {
         stdin = false,
       },
       prettier = {
-        prepend_args = { '--arrow-parens', 'avoid', '--jsx-single-quote', '--single-quote' },
+        prepend_args = { '--arrow-parens', 'avoid', '--single-quote' },
+      },
+      ruff = {
+        args_ = {
+          'format',
+          '--config',
+          'format.quote-style = "single"',
+          '--force-exclude',
+          '--stdin-filename',
+          '$FILENAME',
+          '-',
+        },
       },
       shfmt = {
         prepend_args = { '--case-indent', '--indent', '2', '--keep-padding', '--space-redirects' },

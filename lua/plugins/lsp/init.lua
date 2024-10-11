@@ -38,7 +38,7 @@ return {
         require('fearphage.lsp.format').on_attach(client, buffer)
         require('fearphage.lsp.keymaps').on_attach(client, buffer)
 
-        if client.name == 'tsserver' then
+        if client.name == 'tsserver' or client.name == 'ts_ls' then
           client.server_capabilities.documentFormattingProvider = false
         elseif client.name == 'gopls' and not client.server_capabilities.semanticTokensProvider then
           local semantic = client.config.capabilities.textDocument.semanticTokens
@@ -66,6 +66,9 @@ return {
       require('mason-lspconfig').setup({ ensure_installed = vim.tbl_keys(servers) })
       require('mason-lspconfig').setup_handlers({
         function(server)
+          if server == 'tsserver' then
+            server = 'ts_ls'
+          end
           local server_opts = servers[server] or {}
           server_opts.capabilities = capabilities
           if opts.setup[server] then
