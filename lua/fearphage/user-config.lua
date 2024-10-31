@@ -147,7 +147,7 @@ M.lsp_servers = {
       },
     },
   },
-  tsserver = {
+  ts_ls = { -- formerly known as tsserver
     settings = {
       javascript = {
         inlayHints = {
