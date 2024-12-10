@@ -1,3 +1,4 @@
+local user_config = require('fearphage.user-config')
 return {
   {
     'nvim-treesitter/nvim-treesitter',
@@ -5,26 +6,7 @@ return {
     cmd = 'BufRead',
     opts = {
       -- A list of parser names, or "all"
-      ensure_installed = {
-        'bash',
-        'go',
-        'html',
-        'javascript',
-        'json',
-        'lua',
-        'make',
-        'markdown',
-        'markdown_inline',
-        'query', --- treesitter playground
-        'rust',
-        'svelte',
-        'tsx',
-        'typescript',
-        'vim',
-        'vimdoc',
-        'vue',
-        'yaml',
-      },
+      ensure_installed = user_config.treesitter,
 
       -- Install parsers synchronously (only applied to `ensure_installed`)
       sync_install = false,

@@ -83,6 +83,7 @@ M.formatters_by_ft = {
 }
 
 M.lsp_servers = {
+  -- ansiblels = {},
   bashls = {},
   cssls = {},
   dockerls = {},
@@ -108,7 +109,8 @@ M.lsp_servers = {
       },
     },
   },
-  -- groovyls = {}, -- requires Java :'('
+  -- gradle_ls = {}, -- requires Java :'(
+  -- groovyls = {}, -- requires Java :'(
   html = {},
   jsonls = {},
   lua_ls = {
@@ -135,7 +137,7 @@ M.lsp_servers = {
   svelte = {},
   tailwindcss = {},
   terraformls = {
-    filetypes = { 'tf', 'terraform' },
+    filetypes = { 'hcl', 'tf', 'terraform' },
   },
   texlab = {
     settings = {
@@ -178,6 +180,30 @@ M.lsp_servers = {
   vimls = {},
   vuels = {},
   yamlls = {},
+}
+
+M.treesitter = {
+  'bash',
+  'go',
+  'groovy',
+  'hcl',
+  'html',
+  'java',
+  'javascript',
+  'json',
+  'lua',
+  'make',
+  'markdown',
+  'markdown_inline',
+  'query', --- treesitter playground
+  'rust',
+  'svelte',
+  'tsx',
+  'typescript',
+  'vim',
+  'vimdoc',
+  'vue',
+  'yaml',
 }
 
 return M
