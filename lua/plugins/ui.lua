@@ -251,7 +251,7 @@ return {
     opts = {
       lsp = {
         override = {
-          ['cmp.entry.get_documentation'] = true,
+          -- ['cmp.entry.get_documentation'] = true,
           ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
           ['vim.lsp.util.stylize_markdown'] = true,
         },
@@ -287,10 +287,14 @@ return {
   -- ui components
   { 'MunifTanjim/nui.nvim', lazy = true },
   -- Navic and NavBuddy work together
-  'SmiteshP/nvim-navic',
+  {
+    'SmiteshP/nvim-navic',
+    enabled = false,
+  },
   {
     'SmiteshP/nvim-navbuddy',
     cmd = 'NavBuddy',
+    enabled = false,
     dependencies = {
       'neovim/nvim-lspconfig',
       'SmiteshP/nvim-navic',
