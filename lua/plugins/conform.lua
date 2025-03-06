@@ -45,7 +45,12 @@ return {
         },
       },
       shfmt = {
-        prepend_args = { '--case-indent', '--indent', '2', '--keep-padding', '--space-redirects' },
+        prepend_args = {
+          '--case-indent',
+          '--indent', '2',
+          -- '--keep-padding',
+          '--space-redirects'
+        },
       },
       stylua = {
         prepend_args = { '--indent-type', 'Spaces', '--indent-width', '2', '--quote-style', 'AutoPreferSingle' },
