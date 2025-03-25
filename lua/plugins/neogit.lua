@@ -9,7 +9,7 @@ return {
     'ibhagwan/fzf-lua', -- optional
     'echasnovski/mini.pick', -- optional
   },
-  config = {
+  opts = {
     kind = 'vsplit',
   },
   keys = {

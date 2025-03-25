@@ -39,3 +39,6 @@ vim.filetype.add({
 })
 
 vim.g.linterConfigs = vim.fs.normalize('~/.config/+ linter-configs/')
+
+-- disable mini.pairs
+vim.g.minipairs_disable = true

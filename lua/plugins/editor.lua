@@ -127,17 +127,6 @@ return {
     'yasuhiroki/github-actions-yaml.vim',
     ft = 'yaml',
   },
-  -- copilot
-  {
-    'zbirenbaum/copilot.lua',
-    event = 'VeryLazy',
-    config = {
-      -- auth_provider_url:
-    },
-    -- config = function()
-    --   require('fearphage.copilot-vim')
-    -- end,
-  },
   -- hard time - discourages/prevents repeated use of HJKL and other movements
   {
     'm4xshen/hardtime.nvim',
@@ -146,12 +135,6 @@ return {
       'nvim-lua/plenary.nvim',
     },
     opts = {},
-  },
-
-  {
-    'karb94/neoscroll.nvim',
-    event = { 'CursorHold', 'CursorHoldI' },
-    config = true,
   },
 
   {

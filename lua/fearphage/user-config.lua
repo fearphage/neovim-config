@@ -79,7 +79,7 @@ M.formatters_by_ft = {
   python = { "isort", "black", "ruff" },
   sh = { "shellcheck", "shfmt" },
   typescript = { "biome" },
-  yaml = { "prettier" },
+  yaml = { "prettier", "actionlint" },
 }
 
 M.lsp_servers = {
