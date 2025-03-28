@@ -39,3 +39,7 @@ vim.filetype.add({
 })
 
 vim.g.linterConfigs = vim.fs.normalize('~/.config/+ linter-configs/')
+
+-- LLM model
+-- _G.COPILOT_MODEL = 'gpt-4o'
+_G.COPILOT_MODEL = 'claude-3.7-sonnet'

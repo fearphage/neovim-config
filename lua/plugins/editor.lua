@@ -131,7 +131,7 @@ return {
   {
     'zbirenbaum/copilot.lua',
     event = 'VeryLazy',
-    config = {
+    opts = {
       -- auth_provider_url:
     },
     -- config = function()
@@ -146,12 +146,6 @@ return {
       'nvim-lua/plenary.nvim',
     },
     opts = {},
-  },
-
-  {
-    'karb94/neoscroll.nvim',
-    event = { 'CursorHold', 'CursorHoldI' },
-    config = true,
   },
 
   {

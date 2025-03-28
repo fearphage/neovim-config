@@ -43,7 +43,6 @@ M.enable_plugins = {
   lsp_zero = true,
   lualine = true,
   neodev = true,
-  neoscroll = true,
   neotree = true,
   noice = true,
   notify = true,

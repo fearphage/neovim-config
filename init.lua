@@ -44,6 +44,7 @@ require('lazy').setup({
     -- { import = 'lazyvim.plugins.extras.ui.mini-animate' },
     -- import/override with your plugins
     { import = 'plugins' },
+    { import = 'plugins.themes' },
   },
   -- limits concurrency to prevent 'fetch failed' errors
   -- https://github.com/folke/lazy.nvim/issues/648#issuecomment-1753316146
@@ -58,6 +59,7 @@ require('lazy').setup({
     -- version = '*', -- try installing the latest stable version for plugins that support semver
   },
   install = { colorscheme = { 'catppuccin', 'gruvbox', 'habamax', 'kanagawa', 'nightfox', 'rose-pine', 'tokyonight' } },
+  colorscheme = 'tokyonight',
   checker = { enabled = false }, -- automatically check for plugin updates
   performance = {
     rtp = {
