@@ -168,6 +168,7 @@ return {
           { name = 'nvim_lua', max_item_count = 5, group_index = 2 },
           { name = 'buffer', group_index = 3 },
           { name = 'calc', group_index = 3 },
+          { name = 'render-markdown', group_index = 3 },
           { name = 'emoji', group_index = 3 },
           { name = 'treesitter', group_index = 3 },
           { name = 'spell', group_index = 3 },
