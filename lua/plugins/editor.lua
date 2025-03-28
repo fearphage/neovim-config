@@ -127,17 +127,6 @@ return {
     'yasuhiroki/github-actions-yaml.vim',
     ft = 'yaml',
   },
-  -- copilot
-  {
-    'zbirenbaum/copilot.lua',
-    event = 'VeryLazy',
-    opts = {
-      -- auth_provider_url:
-    },
-    -- config = function()
-    --   require('fearphage.copilot-vim')
-    -- end,
-  },
   -- hard time - discourages/prevents repeated use of HJKL and other movements
   {
     'm4xshen/hardtime.nvim',
