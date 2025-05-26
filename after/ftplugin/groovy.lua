@@ -1,4 +1,4 @@
-local lspconfig = require('lspconfig')
+-- local lspconfig = require('lspconfig')
 
 vim.opt_local.shiftwidth = 4
 vim.opt_local.softtabstop = 4

@@ -67,7 +67,7 @@ M.formatters_by_ft = {
   ["_"] = { "trim_whitespace", "trim_newlines", "squeeze_blanks" },
   -- bib = { "trim_whitespace", "bibtex-tidy" },
   css = { "stylelint", "prettier" },
-  groovy = { "npm_groovy_lint" },
+  -- groovy = { "npm_groovy_lint" },
   html = { "prettier" },
   javascript = { "biome" },
   json = { "biome" },
@@ -86,6 +86,17 @@ M.lsp_servers = {
   bashls = {},
   cssls = {},
   dockerls = {},
+  golangci_lint_ls = {
+    init_options = {
+      command = {
+        'golangci-lint',
+        'run',
+        '--issues-exit-code=1',
+        '--output.json.path=stdout',
+        '--show-stats=false',
+      },
+    },
+  },
   gopls = {
     cmd = { 'gopls', '-remote.debug=:0' },
     filetypes = { 'go', 'gomod', 'gohtmltmpl', 'gosum', 'gotexttmpl', 'gotmpl', 'gowork' },

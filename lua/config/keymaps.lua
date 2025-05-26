@@ -149,3 +149,7 @@ end
 keymap({ 'i', 'n', 's', 'x' }, '<C-s>', '<cmd>w<cr><esc>', { desc = 'Save file' })
 keymap('v', '<C-s>', ':sort i<CR>', { desc = 'Sort selection' })
 keymap('v', '<leader>S', ':sort i<CR>', { desc = 'Sort selection' })
+
+keymap('n', '<leader>cr', function()
+  require('live-rename').rename({ insert = true })
+end, { desc = 'Phred Rename' })

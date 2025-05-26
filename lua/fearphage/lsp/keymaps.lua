@@ -37,7 +37,10 @@ function M.on_attach(client, buffer)
   local format = require('fearphage.lsp.format')
   self:map('<leader>cf', format.format, { desc = 'Format Document', has = 'documentFormatting' })
   self:map('<leader>cf', format.format, { desc = 'Format Range', mode = 'v', has = 'documentRangeFormatting' })
-  self:map('<leader>cr', M.rename, { expr = true, desc = 'Rename', has = 'rename' })
+  -- self:map('<leader>cr', M.rename, { expr = true, desc = 'Rename', has = 'rename' })
+  self:map('<leader>cr', function()
+    require('live-rename').rename({ insert = true })
+  end, { expr = true, desc = 'Rename', has = 'rename' })
   self:map('<leader>ct', format.toggle, { desc = 'Toggle Auto Formatting' })
 
   if client.name == 'tsserver' and pcall(require, 'typescript') then
@@ -103,7 +106,11 @@ function M:map(lhs, rhs, opts)
 end
 
 function M.rename()
-  if pcall(require, 'inc_rename') then
+  local ok_lr, lr = pcall(require, 'live-rename')
+
+  if ok_lr then
+    lr.rename({ insert = true })
+  elseif pcall(require, 'inc_rename') then
     return ':IncRename ' .. vim.fn.expand('<cword>')
   else
     vim.lsp.buf.rename()
