@@ -17,6 +17,12 @@ return {
         wo = { wrap = true }, -- Wrap notifications
       },
     },
+    terminal = {
+      win = {
+        border = 'rounded',
+        position = 'float',
+      },
+    },
   },
   --stylua: ignore
   keys = {

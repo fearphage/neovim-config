@@ -19,6 +19,7 @@ vim.opt.tabstop = 2
 vim.opt.termguicolors = true
 vim.opt.undodir = os.getenv('HOME') .. '/.vim/tmp/undo'
 vim.opt.undofile = true
+vim.opt.winborder = 'rounded'
 vim.opt.wrap = false
 
 vim.g.mapleader = ' '
