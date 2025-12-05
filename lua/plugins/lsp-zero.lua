@@ -9,8 +9,8 @@ return {
   dependencies = {
     -- LSP Support
     { 'neovim/nvim-lspconfig' },
-    { 'williamboman/mason.nvim' },
-    { 'williamboman/mason-lspconfig.nvim' },
+    { 'mason-org/mason.nvim' },
+    { 'mason-org/mason-lspconfig.nvim' },
   },
   config = function()
     local lsp = require('lsp-zero')

@@ -85,7 +85,7 @@ return {
 
   -- buffer remove
   {
-    'echasnovski/mini.bufremove',
+    'nvim-mini/mini.bufremove',
     enabled = false,
     -- stylua: ignore
     keys = {

@@ -1,5 +1,5 @@
-local enabled = require('fearphage.helpers').enabled
-local group = require('fearphage.user-config').enable_plugins
+-- local enabled = require('fearphage.helpers').enabled
+-- local group = require('fearphage.user-config').enable_plugins
 ---@param config {args?:string[]|fun():string[]?}
 local function get_args(config)
   local args = type(config.args) == 'function' and (config.args() or {}) or config.args or {}
