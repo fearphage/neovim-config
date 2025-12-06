@@ -12,6 +12,7 @@ return {
         position = 'left',
       },
     },
+    suggestion = { enabled = false },
   },
   should_attach = function(_, bufname)
     local logger = require('copilot.logger')

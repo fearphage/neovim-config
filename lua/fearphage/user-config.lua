@@ -194,6 +194,7 @@ M.lsp_servers = {
 
 M.treesitter = {
   'bash',
+  'copilot',
   'go',
   'groovy',
   'hcl',

@@ -71,7 +71,6 @@ return {
   -- buffer remove
   {
     'nvim-mini/mini.bufremove',
-    enabled = false,
     -- stylua: ignore
     keys = {
       { "<leader>bd", function() require("mini.bufremove").delete(0, false) end, desc = "Delete Buffer" },

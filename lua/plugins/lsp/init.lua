@@ -18,7 +18,8 @@ return {
     -- optional: provides snippets for the snippet source
     dependencies = {
       'rafamadriz/friendly-snippets',
-      'giuxtaposition/blink-cmp-copilot',
+      -- 'giuxtaposition/blink-cmp-copilot',
+      'fang2hou/blink-copilot',
     },
 
     -- use a release tag to download pre-built binaries
@@ -68,7 +69,8 @@ return {
         providers = {
           copilot = {
             name = 'copilot',
-            module = 'blink-cmp-copilot',
+            -- module = 'blink-cmp-copilot',
+            module = 'blink-copilot',
             score_offset = 100,
             async = true,
           },
@@ -77,6 +79,31 @@ return {
             module = 'lazydev.integrations.blink',
             -- make lazydev completions top priority (see `:h blink.cmp`)
             score_offset = 100,
+          },
+          snippets = {
+            module = 'blink.cmp.sources.snippets',
+            score_offset = -1,
+            -- score_offset = -1, -- receives a -3 from top level snippets.score_offset
+
+            -- For `snippets.preset == 'luasnip'`
+            opts = {
+              -- Whether to use show_condition for filtering snippets
+              use_show_condition = true,
+              -- Whether to show autosnippets in the completion list
+              show_autosnippets = true,
+              -- Whether to prefer docTrig placeholders over trig when expanding regTrig snippets
+              prefer_doc_trig = false,
+            },
+
+            -- -- For `snippets.preset == 'default'`
+            -- opts = {
+            -- friendly_snippets = true,
+            -- search_paths = { vim.fn.stdpath('config') .. '/snippets' },
+            -- extended_filetypes = {},
+            -- ignored_filetypes = {},
+            -- -- Set to '+' to use the system clipboard, or '"' to use the unnamed register
+            -- clipboard_register = '+',
+            -- }
           },
         },
       },
@@ -91,88 +118,3 @@ return {
     opts_extend = { 'sources.default' },
   },
 }
--- return {
---   {
---     'neovim/nvim-lspconfig',
---     event = 'BufReadPre',
---     dependencies = {
---       'mason.nvim',
---       'williamboman/mason-lspconfig.nvim',
---       'hrsh7th/cmp-nvim-lsp',
---       {
---         'mrcjkb/rustaceanvim',
---         version = '^4', -- Recommended
---         lazy = false, -- This plugin is already lazy
---       },
---     },
---     opts = {
---       servers = user_config.lsp_servers,
---     },
---     setup = {},
---     config = function(plugin, opts)
---       vim.diagnostic.config({
---         underline = true,
---         virtual_text = {
---           source = 'if_many',
---           spacing = 3,
---           prefix = '←',
---         },
---         virtual_lines = false,
---         signs = true,
---         severity_sort = true,
---         update_in_insert = false,
---       })
---       -- set diagnostic signs?
---
---       helpers.on_attach(function(client, buffer)
---         require('fearphage.lsp.format').on_attach(client, buffer)
---         require('fearphage.lsp.keymaps').on_attach(client, buffer)
---
---         if client.name == 'tsserver' or client.name == 'ts_ls' then
---           client.server_capabilities.documentFormattingProvider = false
---         elseif client.name == 'gopls' and not client.server_capabilities.semanticTokensProvider then
---           local semantic = client.config.capabilities.textDocument.semanticTokens
---           client.server_capabilities.semanticTokensProvider = {
---             full = true,
---             legend = {
---               tokenModifiers = semantic.tokenModifiers,
---               tokenTypes = semantic.tokenTypes,
---             },
---             range = true,
---           }
---         end
---       end)
---
---       --TODO:fixme
---       -- require("lazyvim.util").on_attach(function(client, buffer)
---       --   if client.supports_method("textDocument/inlayHint") then
---       --     vim.lsp.inlay_hint(buffer)
---       --   end
---       -- end)
---
---       local servers = plugin.opts.servers
---       local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
---
---       require('mason-lspconfig').setup({ ensure_installed = vim.tbl_keys(servers) })
---       require('mason-lspconfig').setup_handlers({
---         function(server)
---           if server == 'tsserver' then
---             server = 'ts_ls'
---           end
---           local server_opts = servers[server] or {}
---           server_opts.capabilities = capabilities
---           if opts.setup[server] then
---             if opts.setup[server](server, server_opts) then
---               return
---             end
---           elseif opts.setup['*'] then
---             if opts.setup['*'](server, server_opts) then
---               return
---             end
---           end
---           require('lspconfig')[server].setup(server_opts)
---         end,
---       })
---     end,
---   },
--- }
