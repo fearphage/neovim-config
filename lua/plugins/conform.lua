@@ -19,7 +19,7 @@ return {
     -- stylua: ignore
     formatters = {
       biome = {
-        prepend_args = { 'format' , '--arrow-parentheses', 'as-needed', '--indent-style', 'space', '--semicolons', 'always', '--quote-style', 'single' }
+        prepend_args = { 'format' , '--arrow-parentheses', 'as-needed', '--indent-style', 'space', '--javascript-formatter-quote-style', 'single', '--semicolons', 'always', '--use-editorconfig', 'true' }
       },
       markdownlint = {
         -- prepend_args = { '--config', vim.g.linterConfigs .. '/markdownlint.yaml' },
