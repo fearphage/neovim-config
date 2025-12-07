@@ -20,6 +20,7 @@ return {
       'rafamadriz/friendly-snippets',
       -- 'giuxtaposition/blink-cmp-copilot',
       'fang2hou/blink-copilot',
+      'Kaiser-Yang/blink-cmp-avante',
     },
 
     -- use a release tag to download pre-built binaries
@@ -61,12 +62,17 @@ return {
         default = {
           'lazydev',
           'lsp',
+          'avante',
           'path',
           'snippets',
           'buffer',
           'copilot',
         },
         providers = {
+          avante = {
+            module = 'blink-cmp-avante',
+            name = 'Avante',
+          },
           copilot = {
             name = 'copilot',
             -- module = 'blink-cmp-copilot',
@@ -80,31 +86,32 @@ return {
             -- make lazydev completions top priority (see `:h blink.cmp`)
             score_offset = 100,
           },
-          snippets = {
-            module = 'blink.cmp.sources.snippets',
-            score_offset = -1,
-            -- score_offset = -1, -- receives a -3 from top level snippets.score_offset
-
-            -- For `snippets.preset == 'luasnip'`
-            opts = {
-              -- Whether to use show_condition for filtering snippets
-              use_show_condition = true,
-              -- Whether to show autosnippets in the completion list
-              show_autosnippets = true,
-              -- Whether to prefer docTrig placeholders over trig when expanding regTrig snippets
-              prefer_doc_trig = false,
-            },
-
-            -- -- For `snippets.preset == 'default'`
-            -- opts = {
-            -- friendly_snippets = true,
-            -- search_paths = { vim.fn.stdpath('config') .. '/snippets' },
-            -- extended_filetypes = {},
-            -- ignored_filetypes = {},
-            -- -- Set to '+' to use the system clipboard, or '"' to use the unnamed register
-            -- clipboard_register = '+',
-            -- }
-          },
+          snippets = { preset = 'mini_snippets' },
+          -- snippets = {
+          --   module = 'blink.cmp.sources.snippets',
+          --   score_offset = -1,
+          --   -- score_offset = -1, -- receives a -3 from top level snippets.score_offset
+          --
+          --   -- For `snippets.preset == 'luasnip'`
+          --   opts = {
+          --     -- Whether to use show_condition for filtering snippets
+          --     use_show_condition = true,
+          --     -- Whether to show autosnippets in the completion list
+          --     show_autosnippets = true,
+          --     -- Whether to prefer docTrig placeholders over trig when expanding regTrig snippets
+          --     prefer_doc_trig = false,
+          --   },
+          --
+          --   -- -- For `snippets.preset == 'default'`
+          --   -- opts = {
+          --   -- friendly_snippets = true,
+          --   -- search_paths = { vim.fn.stdpath('config') .. '/snippets' },
+          --   -- extended_filetypes = {},
+          --   -- ignored_filetypes = {},
+          --   -- -- Set to '+' to use the system clipboard, or '"' to use the unnamed register
+          --   -- clipboard_register = '+',
+          --   -- }
+          -- },
         },
       },
 

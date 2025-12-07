@@ -133,6 +133,9 @@ M.lsp_servers = {
           -- Fix Undefined global 'vim'
           globals = { 'vim' },
         },
+        format = {
+          enable = false,
+        },
         hint = { enable = true },
         telemetry = { enable = false },
         workspace = {
