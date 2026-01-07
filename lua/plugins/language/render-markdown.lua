@@ -4,6 +4,6 @@ return {
   ---@module 'render-markdown'
   ---@type render.md.UserConfig
   opts = {
-    latest = { enabled = false },
+    latex = { enabled = false },
   },
 }

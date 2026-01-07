@@ -38,13 +38,23 @@ require('lazy').setup({
   spec = {
     -- add LazyVim and import its plugins
     { 'LazyVim/LazyVim', import = 'lazyvim.plugins' },
+    -- NOTE: lazy recommended extra -- phd
+    { import = 'lazyvim.plugins.extras.coding.mini-snippets' },
+    { import = 'lazyvim.plugins.extras.lang.json' },
     -- import any extras modules here
     -- { import = 'lazyvim.plugins.extras.lang.typescript' },
     -- { import = 'lazyvim.plugins.extras.lang.json' },
     -- { import = 'lazyvim.plugins.extras.ui.mini-animate' },
     -- import/override with your plugins
-    { import = 'plugins' },
+    -- { import = "plugins" },
     { import = 'plugins.themes' },
+    { import = 'plugins.core' },
+    { import = 'plugins.ai' },
+    { import = 'plugins.editor' },
+    -- { import = 'plugins.language' },
+    { import = 'plugins.neovim' },
+    { import = 'plugins.lsp' },
+    -- { import = 'plugins.ui' },
   },
   -- limits concurrency to prevent 'fetch failed' errors
   -- https://github.com/folke/lazy.nvim/issues/648#issuecomment-1753316146
@@ -58,7 +68,9 @@ require('lazy').setup({
     version = false, -- always use the latest git commit
     -- version = '*', -- try installing the latest stable version for plugins that support semver
   },
-  install = { colorscheme = { 'catppuccin', 'gruvbox', 'habamax', 'kanagawa', 'nightfox', 'rose-pine', 'tokyonight' } },
+  install = {
+    colorscheme = { 'catppuccin', 'gruvbox', 'habamax', 'kanagawa', 'nightfox', 'rose-pine', 'tokyonight' },
+  },
   colorscheme = 'tokyonight',
   checker = { enabled = false }, -- automatically check for plugin updates
   performance = {
